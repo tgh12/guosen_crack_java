@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="android/content/|com/eno/ENOCoder/|com/guosen/android/system/|com/jcraft/jzlib/" kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry exported="true" kind="lib" path="libs/classes-framework.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-codec-1.6.jar"/>
@@ -17,6 +17,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/httpcore-nio-4.2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpmime-4.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/jsoup-1.7.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/guosen_3.2_m3_dex2jar.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/guosen_3.2_m6_new2_dex2jar.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/junit-4.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

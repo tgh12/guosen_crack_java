@@ -3,7 +3,7 @@ package droidbox.apimonitor;
 import java.io.File;
 import java.lang.reflect.Array;
 
-import android.util.Log;
+import com.zhangwei.yougu.androidconvert.Log;
 
 public class Helper {
 	private static Helper ins = null;
@@ -22,18 +22,50 @@ public class Helper {
 			openDebug = true;
 		}else{
 			openDebug = false;
+			//openDebug = true;
 		}
 	}
 
-	public static void log(String paramString) {
+/*	public static void log(String paramString) {
 		getInstance();
 		if(openDebug){
 			Log.v("DroidBox", paramString.replaceAll("\n", "\\\\n").replaceAll("\r", "\\\\r"));
 		}
 		
+	}*/
+	
+	public static void main(String[] args){
+		byte[] a = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18};
+		log(Helper.toString2(a));
+	}
+	
+	public static void log(String paramString) {
+		final int FRAG_LEN = 2000;
+		getInstance();
+		if(openDebug){
+			String tmp = paramString.replaceAll("\n", "\\\\n").replaceAll("\r", "\\\\r");
+
+			int left = tmp.length();
+			int index = 0;
+			while(left>0){
+				if(left<=FRAG_LEN){
+					Log.v("DroidBox", tmp.substring(index));
+					//System.out.println(tmp.substring(index));
+					left = 0;
+				}else{
+					Log.v("DroidBox", tmp.substring(index, index+FRAG_LEN));
+					//System.out.println(tmp.substring(index, index+FRAG_LEN));
+					left-=FRAG_LEN;
+					index+=FRAG_LEN;
+				}
+
+			}
+			
+		}
+		
 	}
 
-	public static String toString(Object paramObject) {
+	public static String toString2(Object paramObject) {
 		if (paramObject == null)
 			return "null";
 		if (paramObject.getClass().isArray()) {
@@ -57,6 +89,34 @@ public class Helper {
 				}
 
 			}
+		}
+		return paramObject.toString();
+	}
+	
+	public static String toString(Object paramObject) {
+		if (paramObject == null)
+			return "null";
+		if (paramObject.getClass().isArray()) {
+			StringBuilder localStringBuilder = new StringBuilder("{");
+			int i = Array.getLength(paramObject);
+			int j=0;
+			if(i<=0){
+				localStringBuilder.append("}");
+			}else{
+				for (;; ++j) {
+					if (j >= i-1) {
+						localStringBuilder.append(toString(Array.get(paramObject, j)));
+						localStringBuilder.append("}");
+						break;
+					}else{
+						localStringBuilder.append(toString(Array.get(paramObject, j)));
+						localStringBuilder.append(",");
+					}
+
+				}
+			}
+
+			return localStringBuilder.toString();
 		}
 		return paramObject.toString();
 	}
