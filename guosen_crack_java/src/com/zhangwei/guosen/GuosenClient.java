@@ -19,7 +19,6 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.ByteArrayBuffer;
 
 import com.eno.ENOCoder.Hex;
-import com.eno.ENOCoder.MD5;
 import com.eno.ENOCoder.RSA;
 import com.eno.ENOCoder.base64;
 import com.eno.kjava.system.ENODataEncoder;
@@ -37,29 +36,37 @@ public class GuosenClient {
 	private SaveAccountInfo sai;
 	private String userKey = null;
 	
+	public GuosenClient(SaveAccountInfo sai){
 
-	
-	public GuosenClient(){
-		tc_packageid = 1;
-		SystemHUB.m_bfKey = "XMNqxw+RhembfA5K";
-		m_encoder = new ENODataEncoder();
-		SystemHUB.m_encoder = m_encoder;
-		
-		if (localRSA==null && localRSA.loadPublicKey2()) {
-			//userKey_str = "0dnG7+epL6KYuyFU";
-			byte[] userKey_array = localRSA.encode(SystemHUB.m_bfKey.getBytes());
-			userKey  = Hex.encode(userKey_array);
-
-		} 
+		reset(sai);
 	}
 	
-	public void init(SaveAccountInfo sai){
+	public void reset(SaveAccountInfo sai){
 		this.sai = sai;
+		
+		tc_packageid = 1;
+		
+		SystemHUB.m_bfKey = this.sai.m_bfKey; //"XMNqxw+RhembfA5K";
+		
+		if(m_encoder==null){
+			m_encoder = new ENODataEncoder();
+			SystemHUB.m_encoder = m_encoder;
+		}
+
+		localRSA = new RSA();
+		if (localRSA!=null 
+				&& localRSA.loadPublicKey2()) {
+			byte[] userKey_array = localRSA.encode(SystemHUB.m_bfKey.getBytes());
+			userKey  = Hex.encode(userKey_array);
+		} else{
+			userKey = "26916c8fba83671051f79856733cf0de1ad412a1b5c207d75916a05f4bd4ce29";
+		}
 	}
 	
 	public void getSession(){
 		
 		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		postData.add(new BasicNameValuePair("tc_service", "300"));
 		postData.add(new BasicNameValuePair("tc_isunicode", "1")); 
 		postData.add(new BasicNameValuePair("TC_ENCRYPT", "0"));
 		postData.add(new BasicNameValuePair("tc_mfuncno", "100")); 
@@ -89,7 +96,7 @@ public class GuosenClient {
 
 		tc_packageid++;
 		
-		Post("goldsunhq1.guosen.cn", "/", postData);
+		Post("goldsunhq1.guosen.cn:8002", "/", postData);
 	}
 	
 	public void login(){
@@ -142,6 +149,12 @@ public class GuosenClient {
 			
 			httppost.setHeader("Host",  host);
 			httppost.setHeader("Accept", "image/png");
+			
+
+
+			httppost.setHeader("User-Agent",  "ENO KJava Client");
+			httppost.setHeader("Content-Language",  "CN");
+			httppost.setHeader("Content-Type",  "application/x-www-form-urlencoded");
 				
 			//  设置HTTP POST请求参数  
 			httppost.setEntity(new UrlEncodedFormEntity(postData, HTTP.UTF_8));
@@ -187,6 +200,7 @@ public class GuosenClient {
 				
 				if(dec_out!=null){
 					TCRS tcrs = new TCRS(dec_out);
+					Dump_TCRS(dec_out);
 					return tcrs;
 				}
 			}

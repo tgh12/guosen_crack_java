@@ -20,7 +20,9 @@ import com.eno.utils.ENOUtils;
 import com.eno.utils.TCRS;
 import com.guosen.android.system.SystemHUB;
 import com.zhangwei.guosen.GuosenClient;
+import com.zhangwei.guosen.SaveAccountInfo;
 import com.zhangwei.yougu.androidconvert.Log;
+import com.zhangwei.yougu.storage.SDCardStorageManager;
 
 import droidbox.apimonitor.Helper;
 
@@ -160,9 +162,19 @@ public class API {
 	
 	public static void main(String args[]){
 
-		GuosenClient gc = new GuosenClient();
-		//gc.init();
-		gc.getSession();
+		//load info from disk
+		SaveAccountInfo sai = SaveAccountInfo.getInstance();
+		sai.persist();
+		//init
+		GuosenClient gc = new GuosenClient(sai);
+		try {
+			//login();
+			gc.getSession();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//gc.getSession();
 
 	}
 	
