@@ -63,6 +63,10 @@ public class GuosenClient {
 		}
 	}
 	
+	/**
+	 * [GuosenClient]:TCRS.IsError:true, TCRS.isEOF:false
+	 * [GuosenClient]:index:0, fields_index:0, FieldType:101, fieldName:ER_String, toString:没有查到相关软件信息
+	 * */
 	public void getSession(){
 		
 		List<NameValuePair> postData = new ArrayList<NameValuePair>();  

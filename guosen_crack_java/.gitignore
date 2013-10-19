@@ -2,4 +2,4 @@
 
 # Package Files #
 bin/
-assets/default_AccountInfoKey.txt
+.guosen/storage_DefaultAccountInfoKey.txt
