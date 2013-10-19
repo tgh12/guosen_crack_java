@@ -19,6 +19,7 @@ import com.eno.kjava.system.ENODataEncoder;
 import com.eno.utils.ENOUtils;
 import com.eno.utils.TCRS;
 import com.guosen.android.system.SystemHUB;
+import com.zhangwei.guosen.GuosenClient;
 import com.zhangwei.yougu.androidconvert.Log;
 
 import droidbox.apimonitor.Helper;
@@ -158,60 +159,11 @@ public class API {
 	}
 	
 	public static void main(String args[]){
-		//init
-		SystemHUB.m_bfKey = "XMNqxw+RhembfA5K";
-		Log.e(TAG, "m_bfKey.byte[]:" + Helper.toString2(SystemHUB.m_bfKey.getBytes()));
-		userKey_str = SystemHUB.m_bfKey;
 
-		m_encoder = new ENODataEncoder();
-		SystemHUB.m_encoder = m_encoder;
+		GuosenClient gc = new GuosenClient();
+		//gc.init();
+		gc.getSession();
 
-		
-		
-		try {
-
-/*			String enc_r_in_1 = "ywAAAHvwaEHoq87z3MHisQXyENiF+8En6ib8+xHNyaUe/sz9qFO5EPu6RRfRO6fK/3kqSQLIGd545QyRTUtIxCauvrZmPA8aC66XbpAz0SNAGpgSapu2oaJdU9le7h/IesZyZ2uz5PZO1QwktkBWUZCHMrRcLSaS2/1xgaCwcWdxk+OMAvEBP//s2HpSnbOmQvB8iYNDSyAQjuz48yD0hLM6s7ODFn/83iLIlqnw37sJRJXGDNM74AObhZ0i4aPwlCetLI0mhaMoVUhISHDkCVq5HZIR5/hU";
-			String enc_r_in_2 = "BgEAAHNHTu3P2Idwk6QRI5jQGZg/IP0y9Oy10IOBhEI8JVtdSIcDbTS+/8+T2B3fyMHVygpt+SufXyX/hUvouFkT2+lqP50JrmUMm8lBXR2eLNaVgMXh5k6eri2kxe8223VvOJ1ctVgLK4q3Qonik3dtV/QyWahCR5vLCzPy4dD4siN2giF6so+j3ODdpKqfSJdk7DfSz0mqH/pp1n6jfx9sEId3U0snMu90EEzmrlub7Gb1giUDmlwkWoGlaph+sbj+7k99QmFq2rKmqPARnGq1VF7boTgcEDTS1Dx6hFUweguruN+HeXnsE+LE3VK8KPxWbH6iS0B8tGfz9JjWuJ5WSsEZP3hwWe9pi2codZg=";
-			byte[] dec_in_1 = {22,3,0,0,-12,96,-125,-8,-22,-41,-124,3,-96,-38,-113,107,40,-34,62,-122,-118,16,34,-38,-93,77,98,-58,-16,-20,-2,70,-43,-95,93,15,-104,2,-101,102,-108,30,49,9,119,104,-23,14,125,123,-77,43,62,88,-116,-80,72,53,99,-95,9,9,-45,78,125,-68,-5,126,105,-85,58,-116,125,81,-108,-67,116,114,-108,107,36,74,-36,-37,-14,5,110,-17,111,61,-120,-68,-28,-56,-92,75,-54,125,33,-20,-118,-113,-52,-120,-106,-49,107,58,38,-98,121,-60,92,73,-34,42,-94,77,-91,35,2,76,66,-89,-61,-107,-8,76,-105,20,22,-30,-42,-9,-63,60,78,97,-48,74,-6,99,25,90,-117,-122,-37,6,-21,33,50,113,-110,23,34,56,94,60,-87,89,-96,13,-100,78,-24,-72,-100,-123,14,77,-75,-119,-81,98,-109,10,-21,10,-91,-6,126,-34,76,-63,66,20,85,3,9,-17,-84,20,43,124,-13,26,58,-85,75,-69,51,120,-27,66,101,12,104,35,116,-95,6,122,77,26,-13,122,45,107,-107,39,81,18,107,43,73,-124,-18,-56,108,-123,-102,-70,-7,68,-71,-8,106,-92,-21,82,-61,15,122,-106,82,33,-50,124,-35,-120,73,91,86,-92,-60,-80,57,-127,-98,-39,21,8,-63,-51,-16,11,106,55,50,-108,-90,-57,-48,-23,-112,-46,-99,-42,-120,-69,54,22,-82,64,19,-118,-107,1,-116,91,-109,43,18,-111,-105,-125,-72,-33,-8,-38,50,1,123,23,44,-42,124,113,71,5,38,87,-74,-41,-49,25,-53,108,112,-37,-10,-76,-121,-126,-16,123,90,12,35,9,34,-24,-36,86,42,-126,17,-50,36,-59,101,-65,37,-98,100,70,1,-4,29,88,-109,-24,-33,-39,88,-14,-13,-24,-67,56,64,42,-86,46,42,71,-122,-95,9,101,-38,10,11,0,-53,-55,-48,-116,-54,-49,-125,-42,-20,-46,115,32,55,126,83,-70,39,46,-83,-65,-89,59,96,-110,-16,-93,49,-117,-32,7,29,-42,33,-108,-52,89,-29,75,6,-29,29,31,-47,-2,-34,-122,15,-49,-119,8,-28,-117,-4,20,52,-84,126,-99,32,118,-67,-112,-74,2,70,-18,71,63,-67,6,102,-62,-77,-109,-6,-74,-29,-4,33,103,-40,109,122,-28,76,39,31,-35,56,116,-118,69,123,-105,-18,-115,116,119,-109,-67,-75,-29,-96,49,-120,33,-67,68,-118,-2,17,76,23,-38,6,-117,-79,-36,-20,56,18,-47,-118,27,117,-38,65,-57,-126,-100,114,36,-29,-9,-89,14,-101,105,20,-54,17,126,-3,68,-48,-100,84,-77,28,-86,-34,62,-95,24,-77,47,40,106,35,117,-79,68,-103,57,71,119,-121,82,14,-8,23,-91,-33,-115,-12,13,-31,-47,86,-107,-15,106,-47,-88,-88,-127,80,88,-36,58,-30,-86,38,-123,41,-60,-93,-19,-126,-67,-77,-109,71,-77,70,-104,77,-25,99,3,-116,-31,93,48,85,34,-95,118,37,-114,2,16,47,-2,-16,110,-69,-108,-10,67,25,102,44,-41,-91,-47,-56,-17,-6,6,-100,65,-9,107,67,-54,-106,11,-41,-101,44,114,-120,-111,14,-124,77,-117,101,105,-66,126,20,75,-85,96,105,-13,-36,80,-48,70,59,72,41,86,93,-104,18,70,59,-46,66,-68,-49,115,-80,-117,10,-57,-5,62,-98,20,-95,-104,75,95,-103,22,108,105,122,84,-87,16,-121,48,-64,88,96,81,69,-124,77,-118,80,-100,117,-92,-52,20,75,-50,29,55,-11,70,85,52,-58,55,41,97,117,-16,11,46,29,26,79,53,33,98,-1,36,32,72,56,-72,68,-59,22,-83,120,29,-74,54,43,-63,30,109,-126,25,29,66,-52,-23,-97,-85,-57,49,39,77,-86,-77,-102,43,121,-14,68,-8,-62,-61,32,50,52,-113,82,44,-21,21,38,-73,-16,104,-57,60,-10,15,-1,-2,49,-84,94,-85,-5,-80,85,-78,14,-16,47,-28,-9,100,-128,114,-57,55,-107,80,39,-66,-116,126};
-			
-			byte[] enc_r_out_1 = Encode_r(enc_r_in_1.getBytes(), userKey_str.getBytes(), (byte)0, (byte)36);
-			byte[] enc_r_out = Encode_r(enc_r_in_2.getBytes(), userKey_str.getBytes(), (byte)0, (byte)36);
-			Log.e(TAG, "enc_r_out_1:" + new String(enc_r_out_1));
-			Log.e(TAG, "\u6570\u636e\u7f16\u7801\u9519\u8bef!");
-			Log.e(TAG, "enc_r_in_2:" + new String(enc_r_out));
-			
-			byte[] dec_out_1 = Decode(dec_in_1, (byte)36, null, (byte)18);
-
-			
-			Dump_TCRS(dec_out_1);*/
-			
-			login1_3_6();
-
-			//login();
-			//autologin();
-			//register();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-/*	    try{
-	        String hello = "Hello World!";
-
-	        ByteArrayOutputStream out = new ByteArrayOutputStream();
-	        ZOutputStream zOut = new ZOutputStream(out, JZlib.Z_BEST_COMPRESSION);
-	        ObjectOutputStream objOut = new ObjectOutputStream(zOut);
-	        objOut.writeObject(hello);
-	        zOut.close();
-
-	        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-	        ZInputStream zIn = new ZInputStream(in);
-	        ObjectInputStream objIn = new ObjectInputStream(zIn);
-	        System.out.println(objIn.readObject());
-	      }
-	      catch (Exception e){
-	        e.printStackTrace();
-	      }*/
 	}
 	
 	/**
@@ -223,12 +175,22 @@ public class API {
 	 * Host: goldsunhq1.guosen.cn:8002
 	 * Connection: Keep-Alive
 	 * Accept-Encoding: gzip
-	 * conn_style=2.460.00.28731.11821&tc_service=300&tc_isunicode=1&tc_mfuncno=100&
-	 * tc_sfuncno=1&TC_ENCRYPT=0&userKey=8b52ff3cf53e8a69cef0bdf8f0b7c57169ccb817afe250842ea105800ff7574f&
-	 * loginType=1&loginID=18071080819&
-	 * loginPwd=4c9b4f6f21952d6d3c2aa9561dfd7c47&
-	 * supportCompress=18&sysVer=3.6.2.0.0.1&hwID=A000004502832C&softName=Andriod1.6&
-	 * packageid=1&netaddr=18071080819*/
+	 * conn_style=2.460.00.28731.11821
+	 * &tc_service=300
+	 * &tc_isunicode=1
+	 * &tc_mfuncno=100
+	 * &tc_sfuncno=1
+	 * &TC_ENCRYPT=0
+	 * &userKey=8b52ff3cf53e8a69cef0bdf8f0b7c57169ccb817afe250842ea105800ff7574f
+	 * &loginType=1
+	 * &loginID=18071080819
+	 * &loginPwd=4c9b4f6f21952d6d3c2aa9561dfd7c47
+	 * &supportCompress=18
+	 * &sysVer=3.6.2.0.0.1
+	 * &hwID=A000004502832C
+	 * &softName=Andriod1.6
+	 * &packageid=1
+	 * &netaddr=18071080819*/
 	public static void autologin() throws Exception{
 		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		postData.add(new BasicNameValuePair("conn_style", "2.460.00.28731.11821")); 
@@ -860,6 +822,7 @@ public class API {
 	   * &TC_REQLENGTH=244
 	   * &TC_REQDATA=9AAAAKLLHTnoq87z3MHisQXyENiF+8En6ib8+xHNyaUe/sz9qFO5EPu6RRfRO6fK/3kqSQLIGd545QyRTUtIxCauvrZmPA8aC66XbpAz0SNAGpgSapu2oZanBbYc4xMGTkJQyv6e1abkZsKV9v/vFXyBaxV3HPTi3lmSCRTtmPhRyREuPC9nYG1aRevkFc3FE6Lkgxg/odZPY6RqPSgIF9Qr7BO8+LvTrJLjdee7HNr9FWDNK5DXqCeUyjFzs4gdn+Q5/Fts8oiv/ZB4mml7nN6MtMGNwQE+pIGBi1XT5CW2GHel6pQJarNQQoWQ54ANKcDak1SmR2vQJF6m9e/r4Q==
 	   * <TC_REQDATA dec:inputtype=Z&custorgid=3100&inputid=310000110505&trdpwd=1*2*8&operway=i&authtype=0&authdata=&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.00.28930.48031&device_vers=16|4.1.1&>
+	   * 
 	   * (返回 ETag: 0,7,18,36,3500,6)
 	   * 
 	   * 
