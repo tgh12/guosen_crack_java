@@ -25,6 +25,7 @@ import com.eno.kjava.system.ENODataEncoder;
 import com.eno.utils.ENOUtils;
 import com.eno.utils.TCRS;
 import com.guosen.android.system.SystemHUB;
+import com.zhangwei.guosen.utils.StringUtils;
 import com.zhangwei.yougu.androidconvert.Log;
 
 public class GuosenClient {
@@ -35,6 +36,10 @@ public class GuosenClient {
 	private RSA localRSA;
 	private SaveAccountInfo sai;
 	private String userKey = null;
+
+	private StringBuilder sb;
+
+	private DefaultHttpClient httpclient;
 	
 	public GuosenClient(SaveAccountInfo sai){
 
@@ -67,7 +72,8 @@ public class GuosenClient {
 	 * [GuosenClient]:TCRS.IsError:true, TCRS.isEOF:false
 	 * [GuosenClient]:index:0, fields_index:0, FieldType:101, fieldName:ER_String, toString:没有查到相关软件信息
 	 * */
-	public void getSession(){
+	public boolean getSession(){
+		sai.session = null;
 		
 		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		postData.add(new BasicNameValuePair("tc_service", "300"));
@@ -79,7 +85,7 @@ public class GuosenClient {
 		postData.add(new BasicNameValuePair("userKey", userKey));
 		
 		postData.add(new BasicNameValuePair("loginType", sai.chk_word==null?"0":"1"));
-		postData.add(new BasicNameValuePair("loginID", sai.phone));
+		postData.add(new BasicNameValuePair("loginID", sai.chk_word==null?"":sai.phone));
 		
 		String loginPwd = null;
 		if(sai.chk_word!=null){
@@ -88,19 +94,28 @@ public class GuosenClient {
 			loginPwd = ENOUtils.str2MD5(""); //d41d8cd98f00b204e9800998ecf8427e
 		}
 		postData.add(new BasicNameValuePair("loginPwd", loginPwd));
+		postData.add(new BasicNameValuePair("tc_packageid", String.valueOf(tc_packageid)));
 		
 		postData.add(new BasicNameValuePair("supportCompress", "18"));
+		postData.add(new BasicNameValuePair("sysVer", "3.6.4.0.0.2"));
 		postData.add(new BasicNameValuePair("hwID", sai.imei));
 		postData.add(new BasicNameValuePair("softName", "Andriod1.6"));
-		postData.add(new BasicNameValuePair("tc_packageid", String.valueOf(tc_packageid)));
-		postData.add(new BasicNameValuePair("netaddr", sai.phone));
-		postData.add(new BasicNameValuePair("conn_style", "2.460.00.28930.58032"));
+		postData.add(new BasicNameValuePair("netaddr", sai.chk_word==null?"":sai.phone));
+		postData.add(new BasicNameValuePair("conn_style", "2.460.02.0.0"));
 		postData.add(new BasicNameValuePair("device_vers", "16|4.1.1"));
-
 
 		tc_packageid++;
 		
-		Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
+		
+
+		return !StringUtils.isEmpty(sai.session);
 	}
 	
 	public void login(){
@@ -108,10 +123,75 @@ public class GuosenClient {
 	}
 	
 	public void register(){
+		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		postData.add(new BasicNameValuePair("tc_service", "300"));
+		postData.add(new BasicNameValuePair("tc_isunicode", "1")); 
+		postData.add(new BasicNameValuePair("TC_ENCRYPT", "36"));
+		postData.add(new BasicNameValuePair("TC_SESSION", "{" + sai.session + "}"));
+		postData.add(new BasicNameValuePair("tc_mfuncno", "100")); 
+		postData.add(new BasicNameValuePair("tc_sfuncno", "3")); 
 		
+		postData.add(new BasicNameValuePair("tc_packageid", String.valueOf(tc_packageid)));
+		
+		Build_TC_REQDATA_INIT("mobile", sai.phone);
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add(new BasicNameValuePair("TC_REQLENGTH", "" + TC_REQDATA_LEN));
+		postData.add(new BasicNameValuePair("TC_REQDATA", TC_REQDATA));
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
 	}
 	
+	private int Build_TC_REQDATA_GET_NUM() {
+		// TODO Auto-generated method stub
+		return sb.toString().length();
+	}
+
+	private void Build_TC_REQDATA_INIT(String name, String value) {
+		// TODO Auto-generated method stub
+		sb = new StringBuilder();
+		sb = sb.append(name).append("=").append(value);
+	}
+
 	
+	private void Build_TC_REQDATA_ADD(String name, String value) {
+		// TODO Auto-generated method stub
+		if(sb==null){
+			sb = new StringBuilder();
+		}
+		
+		sb = sb.append("&").append(name).append("=").append(value);
+	}
+	
+	private String Build_TC_REQDATA_GET() {
+		// TODO Auto-generated method stub
+		String tc_req_data_plain = null;
+		if(sb==null){
+			tc_req_data_plain = "";
+		}else{
+			tc_req_data_plain = sb.toString();
+		}
+		
+		return Encode(tc_req_data_plain.getBytes(), sai.m_bfKey.getBytes(), (byte)0, (byte)36);
+		
+	}
+
+
 	public void  auth(){
 		
 	}
@@ -137,7 +217,10 @@ public class GuosenClient {
 	}
 
 	private TCRS Post(String host, String url, List<NameValuePair> postData) {
-		HttpClient httpclient = new DefaultHttpClient();
+		if(httpclient==null){
+			httpclient = new DefaultHttpClient();
+		}
+
 		HttpPost httppost = new HttpPost("http://" + host + url);
 		HttpResponse response;
 
@@ -154,8 +237,6 @@ public class GuosenClient {
 			httppost.setHeader("Host",  host);
 			httppost.setHeader("Accept", "image/png");
 			
-
-
 			httppost.setHeader("User-Agent",  "ENO KJava Client");
 			httppost.setHeader("Content-Language",  "CN");
 			httppost.setHeader("Content-Type",  "application/x-www-form-urlencoded");
@@ -203,8 +284,7 @@ public class GuosenClient {
 				byte[] dec_out = Decode(ba.toByteArray(), (byte)encrpytLevel, SystemHUB.m_bfKey.getBytes(), (byte)compressLevel);
 				
 				if(dec_out!=null){
-					TCRS tcrs = new TCRS(dec_out);
-					Dump_TCRS(dec_out);
+					TCRS tcrs = Dump_TCRS(dec_out);
 					return tcrs;
 				}
 			}
@@ -278,26 +358,37 @@ public class GuosenClient {
 		return arrayOfByte;
 	}
 
-	public void Dump_TCRS(byte[] input){
+	public TCRS Dump_TCRS(byte[] input){
+		Log.e(TAG, "input.len:" + input.length);
 		TCRS tcrs = new TCRS(input);
-		Log.e(TAG, "TCRS.IsError:" + tcrs.IsError() + ", TCRS.isEOF:" + tcrs.IsEof());
-		int isok = tcrs.getByte("isok");
-		if(tcrs.IsEof()){
-			tcrs.moveFirst();
-		}
-		
-		int index = 0;
-		while(!tcrs.IsEof()){
+		if(tcrs!=null){
+/*			Log.e(TAG, "TCRS.IsError:" + tcrs.IsError() + ", TCRS.isEOF:" + tcrs.IsEof());
+
+			int isok = tcrs.getByte("isok");
+			if(tcrs.IsEof()){
+				tcrs.moveFirst();
+			}*/
 			
-			int fields_num = tcrs.getFields();
-			int fields_index = 0;
-			while(fields_index<fields_num){
-				Log.i(TAG, "index:" + index + ", fields_index:" + fields_index +", FieldType:" + tcrs.getFieldType(fields_index) + ", fieldName:" + tcrs.getFieldName(fields_index) + ", toString:" + tcrs.toString(fields_index));
-				fields_index++;
+			int index = 0;
+			while(!tcrs.IsEof()){
+				
+				int fields_num = tcrs.getFields();
+				int fields_index = 0;
+				while(fields_index<fields_num){
+					Log.i(TAG, "index:" + index + ", fields_index:" + fields_index +", FieldType:" + tcrs.getFieldType(fields_index) + ", fieldName:" + tcrs.getFieldName(fields_index) + ", toString:" + tcrs.toString(fields_index));
+					fields_index++;
+				}
+				
+				tcrs.moveNext();
 			}
 			
-			tcrs.moveNext();
+			if(tcrs.IsEof()){
+				tcrs.moveFirst();
+			}
+			
 		}
+
+		return tcrs;
 	}
 
 }

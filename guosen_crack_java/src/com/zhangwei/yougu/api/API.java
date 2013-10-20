@@ -87,6 +87,10 @@ public class API {
 
 
 	public static byte[] Decode(byte[] inputdata, byte encrpt_level, byte[] userKey_str, byte compress_level) throws Exception {
+		if(m_encoder==null){
+			m_encoder = new ENODataEncoder();
+		}
+		
 		if ((m_encoder != null) && (encrpt_level != 0))
 			inputdata = m_encoder.encryptData(inputdata, encrpt_level, userKey_str, false);
 		
@@ -103,6 +107,11 @@ public class API {
 
 	public static String Encode(byte[] inputdata, byte[] userKey_str, byte compress_level, byte encrpt_level) {
 		byte[] arrayOfByte = inputdata;
+		
+		if(m_encoder==null){
+			m_encoder = new ENODataEncoder();
+		}
+		
 		if ((m_encoder != null) && (arrayOfByte != null) && (compress_level != 0))
 			arrayOfByte = m_encoder.compressData(arrayOfByte, compress_level, true);
 		
@@ -123,6 +132,10 @@ public class API {
 	 *  输入为base64后的压缩及加密数据
 	 * */
 	public static byte[] Encode_r(byte[] inputdata, byte[] userKey_str, byte compress_level, byte encrpt_level ){
+		if(m_encoder==null){
+			m_encoder = new ENODataEncoder();
+		}
+		
 		//1. de-Base64
 		byte[] arrayOfByte = base64.decode(inputdata);
 		
@@ -165,16 +178,25 @@ public class API {
 		//load info from disk
 		SaveAccountInfo sai = SaveAccountInfo.getInstance();
 		sai.persist();
+		
+		String enc_r_in = "lwAAAL94mYXibOQXPa80JhVJ613PTURtj6RIOnHhK1YOARyX6mPoOWcYH4OoE6gaSsmzzm/fExikKkBMcDxMIgwtYYuz+kWSQJbxCvDjEPWC1XCG2psu3LTBwQ5pQu6MNOKyRd3wKyDzaTRZocDxPhXhEBLFKbKEVUW8RL7zhnL+AG6BpSflep0LPZH7rq9pyUAJggzcz1jd8lkvdDnRwQ==";
+		//open or close
+		enc_r_in = null;
+		
 		//init
-		GuosenClient gc = new GuosenClient(sai);
-		try {
-			//login();
+		if(enc_r_in==null){
+			GuosenClient gc = new GuosenClient(sai);
 			gc.getSession();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			gc.register();
+		}else{
+			Log.i(TAG, "m_bfKey:" + sai.m_bfKey);
+			SystemHUB.m_bfKey = sai.m_bfKey;
+			byte[] enc_out_1 = Encode_r(enc_r_in.getBytes(), sai.m_bfKey.getBytes(), (byte)0, (byte)36);
+			
+			Log.e(TAG, "enc_r_in(dec):" + new String(enc_out_1));
 		}
-		//gc.getSession();
+
+
 
 	}
 	

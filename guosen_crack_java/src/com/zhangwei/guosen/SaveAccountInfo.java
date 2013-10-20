@@ -14,17 +14,17 @@ public class SaveAccountInfo {
 	private static transient final String TAG = "SaveAccountInfoKey";
 	/**************************************************************/
 	
-	String phone; //18071080819
-	String assetID; //310000110505
-	String pwd; //1*8
-	String imei;// = "A000004502832C";
-	String curver;// = "3.6.2.0.0.1";
-	String lastver;// = "3.6.4.1.1.1";
-	String m_bfKey; //"XMNqxw+RhembfA5K"
+	public String phone; //18071080819
+	public String assetID; //310000110505
+	public String pwd; //1*8
+	public String imei;// = "A000004502832C";
+	public String curver;// = "3.6.2.0.0.1";
+	public String lastver;// = "3.6.4.1.1.1";
+	public String m_bfKey; //"XMNqxw+RhembfA5K"
 	
-	String session;
-	String chk_word;
-	String secuid;
+	public String session;
+	public String chk_word;
+	public String secuid;
 	
 	public static SaveAccountInfo getInstance(){
 		if(ins==null){
