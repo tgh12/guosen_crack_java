@@ -177,17 +177,30 @@ public class API {
 
 		//load info from disk
 		SaveAccountInfo sai = SaveAccountInfo.getInstance();
+		sai.pwd = "111248";
+		sai.chk_word = "112081";
+		sai.session = null;
 		sai.persist();
 		
-		String enc_r_in = "lwAAAL94mYXibOQXPa80JhVJ613PTURtj6RIOnHhK1YOARyX6mPoOWcYH4OoE6gaSsmzzm/fExikKkBMcDxMIgwtYYuz+kWSQJbxCvDjEPWC1XCG2psu3LTBwQ5pQu6MNOKyRd3wKyDzaTRZocDxPhXhEBLFKbKEVUW8RL7zhnL+AG6BpSflep0LPZH7rq9pyUAJggzcz1jd8lkvdDnRwQ==";
+		String enc_r_in = "4gAAAHYsbIroq87z3MHisXnQYk6CpnYon++ASBUfUfFpNrwacj1LlWpfKww9WesoDKjOPNK4ammnOykY6cfzgunr3BfZ+ZppERPjhqaGAU/DvurwrpJ8TwO594ieb4r+5rSzAph/C3qNA1b0jEje58wQl6GoLeYAj/CytvCZrWyDNqymnru8wnVFjxHn7XOjxVzp8eFXSj+QCVTaRrhygUp/rYWw91VL+Dyd5vr6nrWKpcnwv5mgEySuezEO7E/TLazYyjx+ZiohIev2Ewwkw15Rf3xyKrBHQ1rMsSnpM0LTTc46E4BbidWz2wRpWDiN";
 		//open or close
 		enc_r_in = null;
 		
 		//init
 		if(enc_r_in==null){
 			GuosenClient gc = new GuosenClient(sai);
-			gc.getSession();
-			gc.register();
+			if(sai.session==null){
+				gc.getSession();
+			}
+
+			if(sai.chk_word==null){
+				gc.register();
+			}
+			
+			//gc.login();
+			//gc.getyinyebuCode();
+			gc.RequestSoftToken();
+
 		}else{
 			Log.i(TAG, "m_bfKey:" + sai.m_bfKey);
 			SystemHUB.m_bfKey = sai.m_bfKey;
@@ -1136,3 +1149,173 @@ public class API {
 		  
 	  }
 }
+
+
+/**
+ * cm_menu_name, cm_menu_id, cm_menu_pid, cm_menu_link
+ *  客户服务, -1, 1723, help?tc_mfuncno=504&tc_sfuncno=31
+ *  资讯中心, -1, 1724, collist?tc_mfuncno=3504&tc_sfuncno=6
+ *  综合排名, -1, 1726, pxhq?tc_mfuncno=31000&tc_sfuncno=3
+ *  我的股票, -1, 1727, zxhq?tc_mfuncno=31000&tc_sfuncno=4
+ *  在线交易, -1, 1730, trademenu
+ *  理财专区, -1, 1729, lczq
+ *  信息快线, -1, 1731, pushmsg
+ *  藏金阁, -1, 1886, cjg?http://blog.guosen.com.cn/mcjg/index/
+ *  全球指数, -1, 1728, collist
+ *  设置帮助, -1, 1725, config
+ *  基金资讯, -1, 1732, of_jjzx
+ *  个股资讯, -1, 1733, f10
+ *  板块行情, -1, 1848, bkhq
+ *  软件更新, 1725, 1734, update
+ *  流量统计, 1725, 1735, lltj
+ *  关于金太阳, 1725, 1736, about
+ *  参数设置, 1725, 1737, cssz
+ *  免责声明, 1725, 1738, newscontent?tc_mfuncno=3501&tc_sfuncno=7&alias=help_wxtx
+ *  快捷键说明, 1725, 1739, newscontent?tc_mfuncno=3501&tc_sfuncno=7&alias=help_kjsm
+ *  金太阳主页, 1725, 1854, mainurl?http://wap.guosen.cn
+ *  沪深指数, 1728, 1740, zgzs?tc_mfuncno=31000&tc_sfuncno=4&count=9&code=399300.1|000001.2|000009.2|000010.2|000002.2|000003.2|000016.2|399001.1|399004.1|399003.1|399005.1|399006.1
+ *  香港指数, 1728, 1741, zgzs?tc_mfuncno=31000&tc_sfuncno=4&count=6&code=100100.3|100101.3|100102.3|100103.3|100104.3|101400.3
+ *  世界指数, 1728, 1742, sjzs?tc_mfuncno=504&tc_sfuncno=33
+ *  开放式基金, 1729, 1744, kfsjj
+ *  申购宝, 1729, 1745, sgb
+ *  金天利, 1729, 1743, jtl
+ *  现金增利, 1729, 1875, xjzl
+ *  融资融券, 1729, 1813, rzrq
+ *  金理财, 1729, 1834, jlc
+ *  金三方, 1729, 1855, jsf
+ *  智能定投, 1729, 1866, zndt
+ *  买入委托, 1730, 1746, buysale?MMLB=0
+ *  卖出委托, 1730, 1747, buysale?MMLB=1
+ *  委托撤单, 1730, 1748, wtcd?tc_mfuncno=500&tc_sfuncno=8&sign=~bsflag&position=poststr&unlist=|market|&cancelflag=1
+ *  银证转帐, 1730, 1749, collist
+ *  资金查询, 1730, 1750, trade_zjcx?tc_mfuncno=500&tc_sfuncno=2&unlist=|moneytype|fundseq|
+ *  股份查询, 1730, 1751, trade_gfcx?tc_mfuncno=500&tc_sfuncno=3&sign=income&position=poststr&unlist=|market|
+ *  当日委托, 1730, 1752, tradequery?tc_mfuncno=500&tc_sfuncno=8&sign=~bsflag&position=poststr&unlist=|market|
+ *  当日成交, 1730, 1753, tradequery?tc_mfuncno=500&tc_sfuncno=9&sign=~bsflag&position=poststr&unlist=|market|
+ *  综合业务, 1730, 1754, collist
+ *  退出交易, 1730, 1755, tradeexit
+ *  基金概况, 1732, 1756, newscontent?tc_mfuncno=504&tc_sfuncno=27
+ *  基金经理, 1732, 1757, newscontent?tc_mfuncno=504&tc_sfuncno=30
+ *  金算盘核心数据, 1733, 1873, newscontent?tc_mfuncno=504&tc_sfuncno=6&lmdm=ggzd
+ *  研究报告, 1733, 1874, newslist?tc_mfuncno=504&tc_sfuncno=7&cont_sfunc=8&newstypeid=yjbg
+ *  信息雷达, 1733, 1758, newscontent?tc_mfuncno=504&tc_sfuncno=11
+ *  公司概况, 1733, 1759, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=gsgk
+ *  财务指标, 1733, 1760, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=cwzb
+ *  主营构成, 1733, 1761, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=zygc
+ *  股本结构, 1733, 1762, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=gbjg
+ *  主要股东, 1733, 1763, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=zygd
+ *  股东人数, 1733, 1764, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=gdrs
+ *  分红扩股, 1733, 1765, newscontent?tc_mfuncno=504&tc_sfuncno=12&lmdm=fhkg
+ *  金天利产品, 1743, 1804, jtlcp?tc_mfuncno=500&tc_sfuncno=54&unlist=|market|autoextension|
+ *  买入, 1743, 1805, jtlmr
+ *  提前终止, 1743, 1806, jtlzz?tc_mfuncno=500&tc_sfuncno=57&unlist=|market|matchcode|&position=poststr
+ *  当日委托查询, 1743, 1807, tradequery?tc_mfuncno=500&tc_sfuncno=59&position=poststr
+ *  当日成交查询, 1743, 1808, tradequery?tc_mfuncno=500&tc_sfuncno=60&position=poststr
+ *  未到期查询, 1743, 1809, tradequery?tc_mfuncno=500&tc_sfuncno=61&unlist=|holdflag|ordersno|
+ *  金天利公告, 1743, 1810, newslist?tc_mfuncno=504&tc_sfuncno=41&cont_sfunc=42&newstypeid=4181
+ *  历史委托查询, 1743, 1811, hisquery?tc_mfuncno=500&tc_sfuncno=59&position=poststr
+ *  历史成交查询, 1743, 1812, hisquery?tc_mfuncno=500&tc_sfuncno=60&position=poststr
+ *  更改续做状态, 1743, 1887, ggxzzt?tc_mfuncno=500&tc_sfuncno=61&unlist=|holdflag|ordersno|&position=poststr
+ *  我的基金, 1744, 1766, of_wdjj?tc_mfuncno=504&tc_sfuncno=24
+ *  基金份额, 1744, 1767, of_fecx?tc_mfuncno=500&tc_sfuncno=41
+ *  基金交易, 1744, 1768, collist
+ *  综合查询, 1744, 1769, collist
+ *  基金开户, 1744, 1770, of_jjkh
+ *  分红设置, 1744, 1771, of_fhsz?tc_mfuncno=500&tc_sfuncno=39
+ *  基金查询, 1744, 1772, collist
+ *  基金排行, 1744, 1773, of_jjpx
+ *  基金评级, 1744, 1774, of_jjpj
+ *  申购新股, 1745, 1775, xgsg?tc_mfuncno=3504&tc_sfuncno=3
+ *  委托查询, 1745, 1776, tradequery?tc_mfuncno=500&tc_sfuncno=8&sign=~bsflag&position=poststr&unlist=|market|
+ *  配号查询, 1745, 1777, hisquery?tc_mfuncno=500&tc_sfuncno=23&position=poststr
+ *  中签查询, 1745, 1778, hisquery?tc_mfuncno=500&tc_sfuncno=25&position=poststr
+ *  新股资讯, 1745, 1779, newslist?tc_mfuncno=504&cont_sfunc=17&tc_sfuncno=16
+ *  待发新股, 1745, 1780, newslist?tc_mfuncno=504&cont_sfunc=19&tc_sfuncno=18
+ *  银行转证券, 1749, 1781, banktransfer
+ *  证券转银行, 1749, 1782, banktransfer
+ *  银行余额, 1749, 1783, bankbalance?tc_mfuncno=500&tc_sfuncno=67
+ *  转帐查询, 1749, 1784, banktranquery?tc_mfuncno=500&tc_sfuncno=22
+ *  股东资料, 1754, 1785, tradequery?tc_mfuncno=500&tc_sfuncno=24
+ *  修改密码, 1754, 1786, xgmm?tc_mfuncno=500&tc_sfuncno=12
+ *  新股配号, 1754, 1787, hisquery?tc_mfuncno=500&tc_sfuncno=23
+ *  历史成交, 1754, 1788, hisquery?tc_mfuncno=500&tc_sfuncno=10&position=poststr
+ *  权证行权, 1754, 1789, qzxq?tc_mfuncno=3500&tc_sfuncno=18
+ *  资金流水, 1754, 1853, hisquery?tc_mfuncno=500&tc_sfuncno=81&position=poststr
+ *  转股回售, 1754, 1871, zghs?tc_mfuncno=3500&tc_sfuncno=1
+ *  交易所基金申赎, 1754, 1872, jysjjss?tc_mfuncno=3500&tc_sfuncno=7
+ *  基金认购, 1768, 1795, of_jjrg?tc_mfuncno=500&tc_sfuncno=34
+ *  基金申购, 1768, 1796, of_jjsg?tc_mfuncno=500&tc_sfuncno=35
+ *  基金赎回, 1768, 1797, of_jjsh?tc_mfuncno=500&tc_sfuncno=36
+ *  基金转换, 1768, 1798, of_jjzh?tc_mfuncno=500&tc_sfuncno=38
+ *  委托撤单, 1768, 1799, of_wtcd?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  当日委托, 1769, 1800, of_jycx?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  基金账号, 1769, 1801, of_jycx?tc_mfuncno=500&tc_sfuncno=43&unlist=|accstatus|
+ *  历史委托查询, 1769, 1802, hisquery?tc_mfuncno=500&tc_sfuncno=40&position=poststr
+ *  历史成交查询, 1769, 1803, hisquery?tc_mfuncno=500&tc_sfuncno=42&position=poststr
+ *  按基金名称查询, 1772, 1790, of_jjmc?tc_mfuncno=3504&tc_sfuncno=24
+ *  按基金公司查询, 1772, 1791, of_jjcx?tc_mfuncno=504&tc_sfuncno=21&cont_sfunc=24
+ *  按基金类型查询, 1772, 1792, of_jjcx?tc_mfuncno=504&tc_sfuncno=22&cont_sfunc=24
+ *  按基金状态查询, 1772, 1793, of_jjcx?tc_mfuncno=504&tc_sfuncno=23&cont_sfunc=24
+ *  查询所有基金, 1772, 1794, of_jjxx?tc_mfuncno=3504&tc_sfuncno=24
+ *  融资买入, 1813, 1814, rzrq_rzmr?tc_mfuncno=3500&tc_sfuncno=7&creditid=0&moneytype=0&creditflag=0&bsflag=0B
+ *  融券卖出, 1813, 1815, rzrq_rzmr?tc_mfuncno=3500&tc_sfuncno=7&creditid=0&moneytype=0&creditflag=1&bsflag=0S
+ *  撤单, 1813, 1816, wtcd?tc_mfuncno=500&tc_sfuncno=8&sign=~bsflag&position=poststr&unlist=|market|&cancelflag=1
+ *  还券还款, 1813, 1817, collist
+ *  担保品划转, 1813, 1864, rzrq_dbphz?tc_mfuncno=500&tc_sfuncno=3&sign=income&position=poststr
+ *  当日委托, 1813, 1818, tradequery?tc_mfuncno=500&tc_sfuncno=8&sign=~bsflag&position=poststr&unlist=|market|
+ *  当日成交, 1813, 1819, tradequery?tc_mfuncno=500&tc_sfuncno=9&sign=~bsflag&position=poststr&unlist=|market|
+ *  合约查询, 1813, 1820, collist
+ *  信用资产查询, 1813, 1821, rzrq_xyzccx?tc_mfuncno=500&tc_sfuncno=74&moneytype=0
+ *  信用上限查询, 1813, 1822, rzrq_xysxcx?tc_mfuncno=500&tc_sfuncno=70&moneytype=0
+ *  综合查询, 1813, 1823, collist
+ *  标的证券查询, 1813, 1847, rzrq_bdzq?tc_mfuncno=500&tc_sfuncno=77&creditid=0
+ *  买券还券, 1817, 1830, rzrq_mqhq?tc_mfuncno=500&tc_sfuncno=72&creditid=0&moneytype=0&creditdirect=1
+ *  现券还券, 1817, 1831, rzrq_xqhq?tc_mfuncno=500&tc_sfuncno=72&creditid=0&moneytype=0&creditdirect=1
+ *  现金还款, 1817, 1832, rzrq_xjhk?tc_mfuncno=500&tc_sfuncno=75&creditid=0&moneytype=0
+ *  卖券还款, 1817, 1833, rzrq_mqhk?tc_mfuncno=500&tc_sfuncno=3&sign=income&position=poststr&busiflag=0
+ *  自动还款设置, 1817, 1862, rzrq_zdhksz?tc_mfuncno=500&tc_sfuncno=86
+ *  未平仓合约查询, 1820, 1828, tradequery?tc_mfuncno=500&tc_sfuncno=72&creditid=0&moneytype=0&position=poststr
+ *  已平仓合约查询, 1820, 1829, hisquery?tc_mfuncno=500&tc_sfuncno=73&creditid=0&moneytype=0&position=poststr
+ *  资金查询, 1823, 1846, trade_zjcx?tc_mfuncno=500&tc_sfuncno=2
+ *  股份查询, 1823, 1824, tradequery?tc_mfuncno=500&tc_sfuncno=3&sign=income&position=poststr&busiflag=0
+ *  担保品证券查询, 1823, 1825, rzrq_dbpzq?tc_mfuncno=500&tc_sfuncno=78&creditid=0
+ *  历史委托查询, 1823, 1826, hisquery?tc_mfuncno=500&tc_sfuncno=79&position=poststr&creditid=0&creditflag=
+ *  历史成交查询, 1823, 1827, hisquery?tc_mfuncno=500&tc_sfuncno=10&position=poststr&creditid=0&creditflag=
+ *  金理财产品, 1834, 1835, jlccp?tc_mfuncno=3500&tc_sfuncno=20
+ *  查询份额, 1834, 1836, of_fecx?tc_mfuncno=500&tc_sfuncno=41
+ *  金理财交易, 1834, 1837, collist
+ *  开户, 1834, 1843, of_jjkh
+ *  历史成交, 1834, 1844, hisquery?tc_mfuncno=500&tc_sfuncno=42&position=poststr
+ *  分红设置, 1834, 1845, of_fhsz?tc_mfuncno=500&tc_sfuncno=39
+ *  金理财信息, 1834, 1865, newslist?tc_mfuncno=504&tc_sfuncno=41&cont_sfunc=42&newstypeid=5543
+ *  认购, 1837, 1838, jlcrg?tc_mfuncno=500&tc_sfuncno=34
+ *  申购, 1837, 1839, jlcsg?tc_mfuncno=500&tc_sfuncno=35
+ *  赎回, 1837, 1840, of_jjsh?tc_mfuncno=500&tc_sfuncno=36
+ *  撤单, 1837, 1841, of_wtcd?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  当日委托, 1837, 1842, of_jycx?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  板块指数排行, 1848, 1849, bkph?tc_mfuncno=31000&tc_sfuncno=4&code=399139|399140|399150|399160|399170|399180|399190|399200|399210|399220|000006.2|000018.2|000025.2|000026.2|000027.2|000032.2|000033.2|000034.2|000036.2|000037.2|000038.2|000039.2|000040.2|000041.2|000042.2&field=4|21|16|20|11|3|1
+ *  概念板块, 1848, 1850, bkhqlist?tc_mfuncno=504&tc_sfuncno=46&sector=GN
+ *  行业板块, 1848, 1851, bkhqlist?tc_mfuncno=504&tc_sfuncno=46&sector=HY
+ *  地区板块, 1848, 1852, bkhqlist?tc_mfuncno=504&tc_sfuncno=46&sector=DQ
+ *  帐户资金转帐, 1855, 1856, jsf_zjzz
+ *  一键转帐, 1855, 1857, jsf_yjzz
+ *  查询帐户资金, 1855, 1858, jsf_cxzhzj?tc_mfuncno=500&tc_sfuncno=83&unlist=|moneytype|bzzhbz|bankcode|
+ *  银证转帐, 1855, 1859, jsf_yzzz
+ *  银行余额, 1855, 1860, jsf_yhye?tc_mfuncno=500&tc_sfuncno=67
+ *  转帐查询, 1855, 1861, banktranquery?tc_mfuncno=500&tc_sfuncno=22
+ *  开通, 1866, 1867, zndt_kt?tc_mfuncno=500&tc_sfuncno=50&position=poststr&unlist=|tacode|schedueleflag|ofriskvalue|
+ *  修改, 1866, 1868, zndt_xg?tc_mfuncno=500&tc_sfuncno=1804&position=poststr&unlist=|tacode|actionmode|
+ *  终止, 1866, 1869, zndt_zz?tc_mfuncno=500&tc_sfuncno=1804&position=poststr&unlist=|tacode|actionmode|
+ *  已开通的智能定投, 1866, 1870, zndt_cx?tc_mfuncno=500&tc_sfuncno=1804&position=poststr&unlist=|tacode|actionmode|
+ *  电子签约, 1875, 1876, xjzl_dzqy
+ *  赎回, 1875, 1877, xjzl_sh?tc_mfuncno=500&tc_sfuncno=36
+ *  查询份额, 1875, 1878, of_fecx?tc_mfuncno=500&tc_sfuncno=41
+ *  撤单, 1875, 1879, of_wtcd?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  当日委托, 1875, 1880, of_jycx?tc_mfuncno=500&tc_sfuncno=45&position=poststr
+ *  历史成交, 1875, 1881, hisquery?tc_mfuncno=500&tc_sfuncno=42&position=poststr
+ *  预约取款, 1875, 1882, xjzl_yyqk?tc_mfuncno=3501&tc_sfuncno=2&tacode=8&ofcode=931204&alias=xjzl_yyqk
+ *  预约取款撤单, 1875, 1883, xjzl_yyqkcd?tc_mfuncno=500&tc_sfuncno=824&tacode=8&ofcode=931204&reservedate=-1&qryflag=0
+ *  设置自动参与, 1875, 1884, xjzl_szzdcy?tc_mfuncno=500&tc_sfuncno=821&tacode=8&ofcode=931204&qryflag=0
+ *  设置保留额度, 1875, 1885, xjzl_szbled?tc_mfuncno=3501&tc_sfuncno=2&tacode=8&ofcode=931204&alias=xjzl_bled
+ * 
+ * */

@@ -13,6 +13,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -69,23 +70,25 @@ public class GuosenClient {
 	}
 	
 	/**
+	 * 100-1
 	 * [GuosenClient]:TCRS.IsError:true, TCRS.isEOF:false
 	 * [GuosenClient]:index:0, fields_index:0, FieldType:101, fieldName:ER_String, toString:没有查到相关软件信息
 	 * */
 	public boolean getSession(){
 		sai.session = null;
 		
-		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
-		postData.add(new BasicNameValuePair("tc_service", "300"));
-		postData.add(new BasicNameValuePair("tc_isunicode", "1")); 
-		postData.add(new BasicNameValuePair("TC_ENCRYPT", "0"));
-		postData.add(new BasicNameValuePair("tc_mfuncno", "100")); 
-		postData.add(new BasicNameValuePair("tc_sfuncno", "1")); 
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "0");
+		postData.add("tc_mfuncno", "100"); 
+		postData.add("tc_sfuncno", "1"); 
 		
-		postData.add(new BasicNameValuePair("userKey", userKey));
+		postData.add("userKey", userKey);
 		
-		postData.add(new BasicNameValuePair("loginType", sai.chk_word==null?"0":"1"));
-		postData.add(new BasicNameValuePair("loginID", sai.chk_word==null?"":sai.phone));
+		postData.add("loginType", sai.chk_word==null?"0":"1");
+		postData.add("loginID", sai.chk_word==null?"":sai.phone);
 		
 		String loginPwd = null;
 		if(sai.chk_word!=null){
@@ -93,16 +96,16 @@ public class GuosenClient {
 		}else{
 			loginPwd = ENOUtils.str2MD5(""); //d41d8cd98f00b204e9800998ecf8427e
 		}
-		postData.add(new BasicNameValuePair("loginPwd", loginPwd));
-		postData.add(new BasicNameValuePair("tc_packageid", String.valueOf(tc_packageid)));
+		postData.add("loginPwd", loginPwd);
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
 		
-		postData.add(new BasicNameValuePair("supportCompress", "18"));
-		postData.add(new BasicNameValuePair("sysVer", "3.6.4.0.0.2"));
-		postData.add(new BasicNameValuePair("hwID", sai.imei));
-		postData.add(new BasicNameValuePair("softName", "Andriod1.6"));
-		postData.add(new BasicNameValuePair("netaddr", sai.chk_word==null?"":sai.phone));
-		postData.add(new BasicNameValuePair("conn_style", "2.460.02.0.0"));
-		postData.add(new BasicNameValuePair("device_vers", "16|4.1.1"));
+		postData.add("supportCompress", "18");
+		postData.add("sysVer", "3.6.4.0.0.2");
+		postData.add("hwID", sai.imei);
+		postData.add("softName", "Andriod1.6");
+		postData.add("netaddr", sai.chk_word==null?"":sai.phone);
+		postData.add("conn_style", "2.460.02.0.0");
+		postData.add("device_vers", "16|4.1.1");
 
 		tc_packageid++;
 		
@@ -118,20 +121,60 @@ public class GuosenClient {
 		return !StringUtils.isEmpty(sai.session);
 	}
 	
+	/**
+	 * 100-2
+	 * */
 	public void login(){
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", '{' + sai.session + '}');
+		postData.add("tc_mfuncno", "100"); 
+		postData.add("tc_sfuncno", "2"); 
 		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+	
+		Build_TC_REQDATA_INIT("curver", sai.curver);
+		Build_TC_REQDATA_ADD("lastver", sai.lastver);
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.00.28930.58032");//2.460.02.0.0 conn_style=2.460.00.28930.58032
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
 	}
 	
+	/**
+	 * 100-3
+	 * */
 	public void register(){
-		List<NameValuePair> postData = new ArrayList<NameValuePair>();  
-		postData.add(new BasicNameValuePair("tc_service", "300"));
-		postData.add(new BasicNameValuePair("tc_isunicode", "1")); 
-		postData.add(new BasicNameValuePair("TC_ENCRYPT", "36"));
-		postData.add(new BasicNameValuePair("TC_SESSION", "{" + sai.session + "}"));
-		postData.add(new BasicNameValuePair("tc_mfuncno", "100")); 
-		postData.add(new BasicNameValuePair("tc_sfuncno", "3")); 
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "100"); 
+		postData.add("tc_sfuncno", "3"); 
 		
-		postData.add(new BasicNameValuePair("tc_packageid", String.valueOf(tc_packageid)));
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
 		
 		Build_TC_REQDATA_INIT("mobile", sai.phone);
 		Build_TC_REQDATA_ADD("supportCompress", "18");
@@ -143,8 +186,237 @@ public class GuosenClient {
 		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
 		String TC_REQDATA = Build_TC_REQDATA_GET();
 		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
-		postData.add(new BasicNameValuePair("TC_REQLENGTH", "" + TC_REQDATA_LEN));
-		postData.add(new BasicNameValuePair("TC_REQDATA", TC_REQDATA));
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
+	}
+	
+	/**
+	 * 31000-4
+	 * 3|4|16|20|21|11|1|
+	 * fieldName:lotsize, toString:100
+	 * fieldName:code, toString:399001
+	 * fieldName:name, toString:深证成指
+	 * fieldName:zjcj, toString:8336.68
+	 * fieldName:zhd, toString:-42.93
+	 * fieldName:zdf, toString:-0.51
+	 * fieldName:zrsp, toString:8379.61
+	 * fieldName:exchid, toString:1
+	 * fieldName:precision, toString:2
+	 * fieldName:lotsize, toString:100
+	 * 
+	 * fieldName:code, toString:600648
+	 * fieldName:name, toString:外高桥
+	 * fieldName:zjcj, toString:41.42
+	 * fieldName:zhd, toString:-0.16
+	 * fieldName:zdf, toString:-0.38
+	 * fieldName:zrsp, toString:41.58
+	 * fieldName:exchid, toString:2
+	 * fieldName:precision, toString:2
+	 * fieldName:lotsize, toString:100
+
+	 * */
+	public boolean getHanqing(){		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+
+		postData.add("TC_ENCRYPT", "0");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+
+		postData.add("tc_mfuncno", "31000"); 
+		postData.add("tc_sfuncno", "4"); 
+		
+		postData.add("code", "000001.2|399001.1|100100.3|600648.2|002572.1|600708.2|600663.2|600018.2|002052.1|002024.1|603128.2|600119.2|600822.2|600751.2|000088.1|002071.1|601928.2|002596.1|600175.2|600679.2|600278.2|600597.2|600887.2|600519.2|002292.1|002416.1|600860.2|002229.1|600637.2|002153.1|600639.2|600823.2|600895.2|000049.1|000735.1|900912.2|000538.1|600535.2|300298.1|600079.2|002603.1|002038.1|600276.2|300246.1");
+		postData.add("count", "44");
+		
+		postData.add("field", "3|4|16|20|21|11|1|");
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		postData.add("supportCompress", "18");
+		postData.add("sysVer", "3.6.4.0.0.2");
+		postData.add("hwID", sai.imei);
+		postData.add("softName", "Andriod1.6");
+		postData.add("netaddr", sai.chk_word==null?"":sai.phone);
+		postData.add("conn_style", "2.460.02.0.0");
+		postData.add("device_vers", "16|4.1.1");
+
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
+		
+
+		return !StringUtils.isEmpty(sai.session);
+	}
+	
+	/**
+	 * 3750-5
+	 * fieldName:org_name, toString:深圳红岭中路营业部
+	 * fieldName:org_code, toString:1100
+	 * fieldName:org_id, toString:20
+	 * ...
+	 * fieldName:org_name, toString:武汉沿江大道营业部
+	 * fieldName:org_code, toString:3100
+	 * fieldName:org_id, toString:36
+	 * */
+	public boolean getyinyebuCode(){		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+
+		postData.add("TC_ENCRYPT", "0");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+
+		postData.add("tc_mfuncno", "3750"); 
+		postData.add("tc_sfuncno", "5"); 
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		postData.add("supportCompress", "18");
+		postData.add("sysVer", "3.6.4.0.0.2");
+		postData.add("hwID", sai.imei);
+		postData.add("softName", "Andriod1.6");
+		postData.add("netaddr", sai.chk_word==null?"":sai.phone);
+		postData.add("conn_style", "2.460.02.0.0");
+		postData.add("device_vers", "16|4.1.1");
+
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
+		
+
+		return !StringUtils.isEmpty(sai.session);
+	}
+	
+	/**
+	 * 3500-10
+	 * 
+	 * fieldName:ER_String, toString:软件令牌同一天最多申请三次!
+	 * 
+	 * fieldName:seed, toString:83FE85BBECA6355AF43011B6D06C81F2
+	 * fieldName:fundidlist, toString:310000110505
+	 * fieldName:secuidlist, toString:0139082908,A261906525
+	 * */
+	public void RequestSoftToken(){
+		sai.inputtype = "Z";
+		sai.custorgid = "3100";
+
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "3500"); 
+		postData.add("tc_sfuncno", "10"); 
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * inputtype=Z&inputid=310000110505&trdpwd=111248&mobileno=18071080819&custorgid=1100&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		Build_TC_REQDATA_INIT("inputtype", sai.inputtype);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("trdpwd", sai.pwd);
+		Build_TC_REQDATA_ADD("mobileno", sai.phone);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+
+
+
+
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			sai.session = tcrs.toString("session");
+			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
+			Log.e(TAG, "session got:" + sai.session);
+		}
+	}
+	
+	
+	/**
+	 * 3500-6
+	 * */
+	public void auth(){
+		sai.inputtype = "Z";
+		sai.custorgid = "3100";
+		sai.authtype = "0";
+		sai.authdata = null;
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "3500"); 
+		postData.add("tc_sfuncno", "6"); 
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * inputtype=Z&custorgid=1100&inputid=310000110505&trdpwd=111245&operway=i&authtype=0&authdata=&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		Build_TC_REQDATA_INIT("inputtype", sai.phone);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("trdpwd", sai.pwd);
+		Build_TC_REQDATA_ADD("operway", "i");
+		Build_TC_REQDATA_ADD("authtype", sai.authtype);
+		if(sai.authdata==null){
+			Build_TC_REQDATA_ADD("authdata", "");
+		}else{
+			Build_TC_REQDATA_ADD("authdata", sai.authdata);
+		}
+
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
 		
 		tc_packageid++;
 		
@@ -166,6 +438,7 @@ public class GuosenClient {
 		// TODO Auto-generated method stub
 		sb = new StringBuilder();
 		sb = sb.append(name).append("=").append(value);
+		sb = sb.append("&");
 	}
 
 	
@@ -175,7 +448,7 @@ public class GuosenClient {
 			sb = new StringBuilder();
 		}
 		
-		sb = sb.append("&").append(name).append("=").append(value);
+		sb = sb.append(name).append("=").append(value).append("&");
 	}
 	
 	private String Build_TC_REQDATA_GET() {
@@ -191,10 +464,6 @@ public class GuosenClient {
 		
 	}
 
-
-	public void  auth(){
-		
-	}
 	
 	public void show_asset(){
 		
@@ -216,7 +485,7 @@ public class GuosenClient {
 		
 	}
 
-	private TCRS Post(String host, String url, List<NameValuePair> postData) {
+	private TCRS Post(String host, String url, PostEntity postData/*List<NameValuePair> postData*/) {
 		if(httpclient==null){
 			httpclient = new DefaultHttpClient();
 		}
@@ -242,7 +511,8 @@ public class GuosenClient {
 			httppost.setHeader("Content-Type",  "application/x-www-form-urlencoded");
 				
 			//  设置HTTP POST请求参数  
-			httppost.setEntity(new UrlEncodedFormEntity(postData, HTTP.UTF_8));
+			//httppost.setEntity(new UrlEncodedFormEntity(postData, HTTP.ASCII));
+			httppost.setEntity(new StringEntity(postData.toString()));
 
 			response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();

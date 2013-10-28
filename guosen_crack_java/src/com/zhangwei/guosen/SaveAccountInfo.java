@@ -21,10 +21,14 @@ public class SaveAccountInfo {
 	public String curver;// = "3.6.2.0.0.1";
 	public String lastver;// = "3.6.4.1.1.1";
 	public String m_bfKey; //"XMNqxw+RhembfA5K"
+	public String inputtype; //Z or C
 	
 	public String session;
 	public String chk_word;
 	public String secuid;
+	public String custorgid; //3100 wuhan
+	public String authtype;
+	public String authdata;
 	
 	public static SaveAccountInfo getInstance(){
 		if(ins==null){
