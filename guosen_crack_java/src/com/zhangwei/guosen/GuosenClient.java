@@ -28,6 +28,7 @@ import com.eno.utils.TCRS;
 import com.guosen.android.system.SystemHUB;
 import com.zhangwei.guosen.utils.StringUtils;
 import com.zhangwei.yougu.androidconvert.Log;
+import com.zhangwei.yougu.api.API;
 
 public class GuosenClient {
 	private static final String TAG = "GuosenClient";
@@ -75,6 +76,7 @@ public class GuosenClient {
 	 * [GuosenClient]:index:0, fields_index:0, FieldType:101, fieldName:ER_String, toString:没有查到相关软件信息
 	 * */
 	public boolean getSession(){
+		Log.i(TAG, "getSession");
 		sai.session = null;
 		
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
@@ -125,6 +127,7 @@ public class GuosenClient {
 	 * 100-2
 	 * */
 	public void login(){
+		Log.i(TAG, "login");
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();
 		PostEntity postData = new PostEntity();
 		postData.add("tc_service", "300");
@@ -165,6 +168,7 @@ public class GuosenClient {
 	 * 100-3
 	 * */
 	public void register(){
+		Log.i(TAG, "register");
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		PostEntity postData = new PostEntity();
 		postData.add("tc_service", "300");
@@ -225,7 +229,8 @@ public class GuosenClient {
 	 * fieldName:lotsize, toString:100
 
 	 * */
-	public boolean getHanqing(){		
+	public boolean getHanqing(){	
+		Log.i(TAG, "getHanqing");
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		PostEntity postData = new PostEntity();
 		postData.add("tc_service", "300");
@@ -276,7 +281,8 @@ public class GuosenClient {
 	 * fieldName:org_code, toString:3100
 	 * fieldName:org_id, toString:36
 	 * */
-	public boolean getyinyebuCode(){		
+	public boolean getyinyebuCode(){
+		Log.i(TAG, "getyinyebuCode");
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		PostEntity postData = new PostEntity();
 		postData.add("tc_service", "300");
@@ -317,11 +323,20 @@ public class GuosenClient {
 	 * 
 	 * fieldName:ER_String, toString:软件令牌同一天最多申请三次!
 	 * 
-	 * fieldName:seed, toString:83FE85BBECA6355AF43011B6D06C81F2
+	 * fieldName:seed, toString:83FE85BBECA6355AF43011B6D06C81F2 
+	 *                          B464FBE68A9979C2FD06C9F675621CF1FE467954069BF69A49A863AFAF1472543EE892A1B700DC65
 	 * fieldName:fundidlist, toString:310000110505
 	 * fieldName:secuidlist, toString:0139082908,A261906525
+	 * 
+	 * fieldName:orgid, toString:3100
+	 * fieldName:custid, toString:310000110505
+	 * fieldName:seed, toString:83 FE 85 BB EC A6 35 5A F4 30 11 B6 D0 6C 81 F2
+	 * fieldName:fundidlist, toString:310000110505
+	 * fieldName:secuidlist, toString:0139082908,A261906525
+	 * 
 	 * */
 	public void RequestSoftToken(){
+		Log.i(TAG, "RequestSoftToken");
 		sai.inputtype = "Z";
 		sai.custorgid = "3100";
 
@@ -337,6 +352,11 @@ public class GuosenClient {
 		postData.add("tc_packageid", String.valueOf(tc_packageid));
 		
 		/**
+		 * 
+		 *       localHashMap.put("n", localTCRS2.toString("org_name"));
+		 *       localHashMap.put("c", localTCRS2.toString("org_code"));
+		 * 
+		 * String[] accountTypes = { "Z", "0", "1", "2", "3" };
 		 * inputtype=Z&inputid=310000110505&trdpwd=111248&mobileno=18071080819&custorgid=1100&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * */
 		Build_TC_REQDATA_INIT("inputtype", sai.inputtype);
@@ -365,7 +385,7 @@ public class GuosenClient {
 		Log.i(TAG, "postData:" + postData.toString());
 		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
 		if(tcrs!=null && !tcrs.IsError()){
-			sai.session = tcrs.toString("session");
+			sai.seed = tcrs.toString("seed");
 			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
 			Log.e(TAG, "session got:" + sai.session);
 		}
@@ -374,12 +394,23 @@ public class GuosenClient {
 	
 	/**
 	 * 3500-6
+	 * 
+	 * fieldName:ER_String, toString:inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__
 	 * */
 	public void auth(){
+		Log.e(TAG, "============ auth ============");
+		
+		sai.seed = "83FE85BBECA6355AF43011B6D06C81F2";
+		sai.factor = 1;
+		String DynCode = API.genDynCode(sai.seed, sai.factor);
+		Log.i(TAG, "DynCode:" + DynCode);
+		
+
 		sai.inputtype = "Z";
 		sai.custorgid = "3100";
 		sai.authtype = "0";
-		sai.authdata = null;
+		sai.authtype = "5";
+		sai.authdata = DynCode;
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
 		PostEntity postData = new PostEntity();
 		postData.add("tc_service", "300");
@@ -393,8 +424,10 @@ public class GuosenClient {
 		
 		/**
 		 * inputtype=Z&custorgid=1100&inputid=310000110505&trdpwd=111245&operway=i&authtype=0&authdata=&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 
+		 * inputtype=Z&custorgid=1100&inputid=310000110505&trdpwd=111248&operway=i&authtype=5&authdata=209214&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * */
-		Build_TC_REQDATA_INIT("inputtype", sai.phone);
+		Build_TC_REQDATA_INIT("inputtype", sai.inputtype);
 		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
 		Build_TC_REQDATA_ADD("inputid", sai.assetID);
 		Build_TC_REQDATA_ADD("trdpwd", sai.pwd);
@@ -423,11 +456,76 @@ public class GuosenClient {
 		Log.i(TAG, "postData:" + postData.toString());
 		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
 		if(tcrs!=null && !tcrs.IsError()){
-			sai.session = tcrs.toString("session");
-			//bd8e89a55ce88cee80dbc353619e56aa92257b49a5dba7cce9ab2bad
-			Log.e(TAG, "session got:" + sai.session);
+			Log.i(TAG, "tcrs is ok");
 		}
 	}
+	
+	/**
+	 * 新的session也ok。
+	 * 
+	 * fieldName:~moneytype, toString:人民币
+	 * fieldName:fundbal, toString:52.10
+	 * fieldName:fundavl, toString:52.10
+	 * fieldName:stkvalue, toString:12859.00
+	 * fieldName:marketvalue, toString:12911.10
+	 * fieldName:fundid, toString:310000110505
+	 * fieldName:moneytype, toString:0
+	 * fieldName:fundseq, toString:0
+	 * tcrs is ok
+	 * */
+	public void show_asset(){
+		Log.e(TAG, "============ show_asset ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "500"); 
+		postData.add("tc_sfuncno", "2"); 
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * 
+		 * unlist=|moneytype|fundseq|&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+		Build_TC_REQDATA_INIT("unlist", "|moneytype|fundseq|");
+		Build_TC_REQDATA_ADD("inputtype", sai.inputtype);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("orgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("tradenode", "9504");
+		Build_TC_REQDATA_ADD("ext1", "010"); 
+		Build_TC_REQDATA_ADD("userinfo", "~~~" + sai.custorgid);
+		Build_TC_REQDATA_ADD("authid", "__SESSIONID__"); 
+		Build_TC_REQDATA_ADD("operway", "i"); 
+		Build_TC_REQDATA_ADD("fundid", sai.assetID); 
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	}
+	
 	
 	private int Build_TC_REQDATA_GET_NUM() {
 		// TODO Auto-generated method stub
@@ -464,11 +562,7 @@ public class GuosenClient {
 		
 	}
 
-	
-	public void show_asset(){
-		
-	}
-	
+
 	public void show_stocks(){
 		
 	}

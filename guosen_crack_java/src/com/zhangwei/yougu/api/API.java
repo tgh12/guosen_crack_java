@@ -10,6 +10,7 @@ import net.sourceforge.blowfishj.BlowfishCBC;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.dc.DCAlgorithm;
 import com.eno.ENOCoder.CRC;
 //import com.eno.ENOCoder.CRC;
 import com.eno.ENOCoder.Hex;
@@ -19,6 +20,7 @@ import com.eno.kjava.system.ENODataEncoder;
 import com.eno.utils.ENOUtils;
 import com.eno.utils.TCRS;
 import com.guosen.android.system.SystemHUB;
+import com.guosen.android.utils.Utils;
 import com.zhangwei.guosen.GuosenClient;
 import com.zhangwei.guosen.SaveAccountInfo;
 import com.zhangwei.yougu.androidconvert.Log;
@@ -151,6 +153,15 @@ public class API {
 		return arrayOfByte;
 	}
 
+	public static String genDynCode(String seed, int factor){
+		//byte[] keyBytes = new byte[] { 17, 34, 79, 88, -120, 16, 64, 56, 40, 37, 121, 81, -53, -35, 85, 102, 119, 41, 116, -104, 48, 64, 54, -30 };
+	    //String ret = new DCAlgorithm().generateOTP(new String(Utils.decryptMode(keyBytes, seed)), factor, 6);
+	    String ret = new DCAlgorithm().generateOTP(seed, factor, 6);
+	    SaveAccountInfo.getInstance().factor = factor+1;
+	    
+	    return ret;
+	}
+	
 	public static void Dump_TCRS(byte[] input){
 		TCRS tcrs = new TCRS(input);
 		Log.e(TAG, "TCRS.IsError:" + tcrs.IsError() + ", TCRS.isEOF:" + tcrs.IsEof());
@@ -180,9 +191,10 @@ public class API {
 		sai.pwd = "111248";
 		sai.chk_word = "112081";
 		sai.session = null;
+		sai.secuidlist= "0139082908,A261906525";
 		sai.persist();
 		
-		String enc_r_in = "4gAAAHYsbIroq87z3MHisXnQYk6CpnYon++ASBUfUfFpNrwacj1LlWpfKww9WesoDKjOPNK4ammnOykY6cfzgunr3BfZ+ZppERPjhqaGAU/DvurwrpJ8TwO594ieb4r+5rSzAph/C3qNA1b0jEje58wQl6GoLeYAj/CytvCZrWyDNqymnru8wnVFjxHn7XOjxVzp8eFXSj+QCVTaRrhygUp/rYWw91VL+Dyd5vr6nrWKpcnwv5mgEySuezEO7E/TLazYyjx+ZiohIev2Ewwkw15Rf3xyKrBHQ1rMsSnpM0LTTc46E4BbidWz2wRpWDiN";
+		String enc_r_in = "QQEAAMrtzTDP2Idwk6QRI5jQGZg/IP0y9Oy10IOBhEI8JVtdSIcDbTS+/8+T2B3fyMHVygpt+SufXyX/hUvouFkT2+lqP50JrmUMm8lBXR2eLNaVgMXh5k6eri2kxe8223VvOJ1ctVgLK4q3Qonik3dtV/QyWahCR5vLCzPy4dD4siN2giF6so+j3ODdpKqfSJdk7DfSz0mqH/pp1n6jfwysuAWMZvKsek38f9ve+yCvujiuNV9PwruACHQk6KDcwD11SrqnWvMFIz04XQ9nDo+URQSheVfcvbosalSKDJC6lfQaR/EevhB/fsq04vLOQy2nuQqmuZ3vGiDzBdlg8CA/rBC5oLCmc7UVy4+2c+AFhdZLgXHsimmznENC1Y+xzH0sdTpXITCHFnZ7bfwO9p2nQhwgtbjDlOBpkh7Da7Rao5S3akDT0HMRgOSxUYlF";
 		//open or close
 		enc_r_in = null;
 		
@@ -199,14 +211,28 @@ public class API {
 			
 			//gc.login();
 			//gc.getyinyebuCode();
-			gc.RequestSoftToken();
-
+			//gc.RequestSoftToken();
+			//gc.auth();
+			gc.show_asset();
 		}else{
 			Log.i(TAG, "m_bfKey:" + sai.m_bfKey);
 			SystemHUB.m_bfKey = sai.m_bfKey;
 			byte[] enc_out_1 = Encode_r(enc_r_in.getBytes(), sai.m_bfKey.getBytes(), (byte)0, (byte)36);
 			
 			Log.e(TAG, "enc_r_in(dec):" + new String(enc_out_1));
+			String seed = "83FE85BBECA6355AF43011B6D06C81F2";
+			int factor = 1;
+			String DynCode = genDynCode(seed, factor);
+			Log.e(TAG, "DynCode:" + DynCode);
+			factor++;
+			String DynCode1 = genDynCode(seed, factor);
+			Log.e(TAG, "DynCode1:" + DynCode1);
+			factor++;
+			String DynCode2 = genDynCode(seed, factor);
+			Log.e(TAG, "DynCode2:" + DynCode2);
+			factor=1;
+			String DynCode3 = genDynCode(seed, factor);
+			Log.e(TAG, "DynCode3:" + DynCode3);
 		}
 
 

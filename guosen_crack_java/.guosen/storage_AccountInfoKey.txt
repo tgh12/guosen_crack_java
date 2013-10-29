@@ -1,1 +1,1 @@
-{"phone":"18071080819","assetID":"310000110505","pwd":"111248","imei":"A000004502832C","curver":"3.6.2.0.0.1","lastver":"3.6.4.1.1.1","m_bfKey":"XMNqxw+RhembfA5K","chk_word":"112081"}
+{"phone":"18071080819","assetID":"310000110505","pwd":"111248","imei":"A000004502832C","curver":"3.6.2.0.0.1","lastver":"3.6.4.1.1.1","m_bfKey":"XMNqxw+RhembfA5K","chk_word":"112081","secuidlist":"0139082908,A261906525","factor":0}

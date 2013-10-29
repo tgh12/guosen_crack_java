@@ -29,6 +29,9 @@ public class SaveAccountInfo {
 	public String custorgid; //3100 wuhan
 	public String authtype;
 	public String authdata;
+	public String seed;
+	public String secuidlist; //secuidlist, toString:0139082908,A261906525
+	public int factor;
 	
 	public static SaveAccountInfo getInstance(){
 		if(ins==null){
