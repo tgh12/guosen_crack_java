@@ -206,7 +206,9 @@ public class GuosenClient {
 	
 	/**
 	 * 31000-4
-	 * 3|4|16|20|21|11|1|
+		//postData.add("code", "000001.2|399001.1|100100.3|600648.2|002572.1|600708.2|600663.2|600018.2|002052.1|002024.1|603128.2|600119.2|600822.2|600751.2|000088.1|002071.1|601928.2|002596.1|600175.2|600679.2|600278.2|600597.2|600887.2|600519.2|002292.1|002416.1|600860.2|002229.1|600637.2|002153.1|600639.2|600823.2|600895.2|000049.1|000735.1|900912.2|000538.1|600535.2|300298.1|600079.2|002603.1|002038.1|600276.2|300246.1");
+		//postData.add("count", "44");
+		//postData.add("field", "3|4|16|20|21|11|1|");
 	 * fieldName:lotsize, toString:100
 	 * fieldName:code, toString:399001
 	 * fieldName:name, toString:深证成指
@@ -227,6 +229,31 @@ public class GuosenClient {
 	 * fieldName:exchid, toString:2
 	 * fieldName:precision, toString:2
 	 * fieldName:lotsize, toString:100
+	 * 
+	 * 
+	 * 	postData.add("code", "600608.2");
+		postData.add("field", "11|50|51|52|53|54|55|56|57|58|59|70|71|72|73|74|75|76|77|78|79");
+	 * fieldName:zrsp, toString:6.51
+	 * fieldName:bj1, toString:6.51
+	 * fieldName:bl1, toString:3900
+	 * fieldName:bj2, toString:6.50
+	 * fieldName:bl2, toString:3099
+	 * fieldName:bj3, toString:6.49
+	 * fieldName:bl3, toString:51200
+	 * fieldName:bj4, toString:6.48
+	 * fieldName:bl4, toString:10200
+	 * fieldName:bj5, toString:6.47
+	 * fieldName:bl5, toString:28050
+	 * fieldName:sj1, toString:6.53
+	 * fieldName:sl1, toString:9700
+	 * fieldName:sj2, toString:6.54
+	 * fieldName:sl2, toString:13500
+	 * fieldName:sj3, toString:6.55
+	 * fieldName:sl3, toString:19500
+	 * fieldName:sj4, toString:6.56
+	 * fieldName:sl4, toString:17000
+	 * fieldName:sj5, toString:6.57
+	 * fieldName:sl5, toString:46700
 
 	 * */
 	public boolean getHanqing(){	
@@ -242,10 +269,14 @@ public class GuosenClient {
 		postData.add("tc_mfuncno", "31000"); 
 		postData.add("tc_sfuncno", "4"); 
 		
-		postData.add("code", "000001.2|399001.1|100100.3|600648.2|002572.1|600708.2|600663.2|600018.2|002052.1|002024.1|603128.2|600119.2|600822.2|600751.2|000088.1|002071.1|601928.2|002596.1|600175.2|600679.2|600278.2|600597.2|600887.2|600519.2|002292.1|002416.1|600860.2|002229.1|600637.2|002153.1|600639.2|600823.2|600895.2|000049.1|000735.1|900912.2|000538.1|600535.2|300298.1|600079.2|002603.1|002038.1|600276.2|300246.1");
-		postData.add("count", "44");
+		//postData.add("code", "000001.2|399001.1|100100.3|600648.2|002572.1|600708.2|600663.2|600018.2|002052.1|002024.1|603128.2|600119.2|600822.2|600751.2|000088.1|002071.1|601928.2|002596.1|600175.2|600679.2|600278.2|600597.2|600887.2|600519.2|002292.1|002416.1|600860.2|002229.1|600637.2|002153.1|600639.2|600823.2|600895.2|000049.1|000735.1|900912.2|000538.1|600535.2|300298.1|600079.2|002603.1|002038.1|600276.2|300246.1");
+		//postData.add("count", "44");
+		//postData.add("field", "3|4|16|20|21|11|1|");
 		
-		postData.add("field", "3|4|16|20|21|11|1|");
+		postData.add("code", "600608.2");
+		postData.add("field", "11|50|51|52|53|54|55|56|57|58|59|70|71|72|73|74|75|76|77|78|79");
+		
+
 		
 		postData.add("tc_packageid", String.valueOf(tc_packageid));
 		
@@ -461,6 +492,7 @@ public class GuosenClient {
 	}
 	
 	/**
+	 * 500-2
 	 * 新的session也ok。
 	 * 
 	 * fieldName:~moneytype, toString:人民币
@@ -526,6 +558,422 @@ public class GuosenClient {
 		}
 	}
 	
+	/**
+	 * 500-3
+	 * fieldName:poststr, toString:013908290831000002572
+	 * fieldName:stkcode, toString:002572
+	 * fieldName:stkname, toString:索菲亚
+	 * fieldName:stkbal, toString:200
+	 * fieldName:stkavl, toString:200
+	 * fieldName:stkbuy, toString:0
+	 * fieldName:stksale, toString:0
+	 * fieldName:price, toString:20.2000
+	 * fieldName:profitprice, toString:20.1900
+	 * fieldName:costprice, toString:20.1900
+	 * fieldName:mktval, toString:4040.00
+	 * fieldName:income, toString:2.00
+	 * fieldName:profitrate, toString:0.05
+	 * fieldName:secuid, toString:0139082908
+	 * fieldName:~market, toString:深A
+	 * fieldName:market, toString:0
+	 * 
+	 * fieldName:poststr, toString:A26190652531001600648
+	 * fieldName:stkcode, toString:600648
+	 * fieldName:stkname, toString:外高桥
+	 * fieldName:stkbal, toString:200
+	 * fieldName:stkavl, toString:200
+	 * fieldName:stkbuy, toString:0
+	 * fieldName:stksale, toString:0
+	 * fieldName:price, toString:40.3600
+	 * fieldName:profitprice, toString:52.4541
+	 * fieldName:costprice, toString:52.4541
+	 * fieldName:mktval, toString:8072.00
+	 * fieldName:income, toString:-2418.83
+	 * fieldName:profitrate, toString:-23.06
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:market, toString:1
+	 * 
+	 * fieldName:poststr, toString:A26190652531001600708
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:stkbal, toString:100
+	 * fieldName:stkavl, toString:100
+	 * fieldName:stkbuy, toString:0
+	 * fieldName:stksale, toString:0
+	 * fieldName:price, toString:7.4700
+	 * fieldName:profitprice, toString:8.5806
+	 * fieldName:costprice, toString:8.5806
+	 * fieldName:mktval, toString:747.00
+	 * fieldName:income, toString:-111.06
+	 * fieldName:profitrate, toString:-12.94
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:market, toString:1
+	 * */
+	public void show_stocks(){
+		Log.e(TAG, "============ show_stocks ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "500"); 
+		postData.add("tc_sfuncno", "3"); 
+		
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * sign=income&position=poststr&unlist=|market|&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&poststr=&qryflag=1&count=20&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+		Build_TC_REQDATA_INIT("sign", "income");
+		Build_TC_REQDATA_ADD("position", "poststr");
+		Build_TC_REQDATA_ADD("unlist", "|market|");
+		Build_TC_REQDATA_ADD("inputtype", sai.inputtype);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("orgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("tradenode", "9504");
+		Build_TC_REQDATA_ADD("ext1", "010"); 
+		Build_TC_REQDATA_ADD("userinfo", "~~~" + sai.custorgid);
+		Build_TC_REQDATA_ADD("authid", "__SESSIONID__"); 
+		Build_TC_REQDATA_ADD("operway", "i"); 
+		Build_TC_REQDATA_ADD("fundid", sai.assetID); 
+		Build_TC_REQDATA_ADD("poststr", ""); 
+		Build_TC_REQDATA_ADD("qryflag", "1");
+		Build_TC_REQDATA_ADD("count", "20");
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	
+	}
+	
+	/**
+	 * 500-7
+	 * fieldName:ER_String, toString:-420413075没有可撤单的委托fundid = 310000110505
+	 * 
+	 * 500-8
+	 * 500-9
+	 * */
+	public void weituo(int tc_sfuncno, boolean cancelflag){
+
+		
+		Log.e(TAG, "============ weituo()????? ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "500"); 
+		//postData.add("tc_sfuncno", "8"); 
+		postData.add("tc_sfuncno", tc_sfuncno + "");
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * 500-7
+		 * inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		
+		/**
+		 * 500-8/9
+		 * sign=~bsflag&position=poststr&unlist=|market|&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&poststr=&qryflag=1&count=20&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		
+		/**
+		 * 500-8
+		 * sign=~bsflag&position=poststr&unlist=|market|&cancelflag=1&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&poststr=&qryflag=1&count=20&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+		if(tc_sfuncno==7){
+			Build_TC_REQDATA_INIT("inputtype", sai.inputtype);
+		}else{
+			Build_TC_REQDATA_INIT("sign", "~bsflag");
+			Build_TC_REQDATA_ADD("position", "poststr");
+			Build_TC_REQDATA_ADD("unlist", "|market|");
+			if(cancelflag){
+				Build_TC_REQDATA_ADD("cancelflag", "1");
+			}
+			Build_TC_REQDATA_ADD("inputtype", sai.inputtype);
+		}
+			
+
+		
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("orgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("tradenode", "9504");
+		Build_TC_REQDATA_ADD("ext1", "010"); 
+		Build_TC_REQDATA_ADD("userinfo", "~~~" + sai.custorgid);
+		Build_TC_REQDATA_ADD("authid", "__SESSIONID__"); 
+		Build_TC_REQDATA_ADD("operway", "i"); 
+		Build_TC_REQDATA_ADD("fundid", sai.assetID); 
+		
+		if(tc_sfuncno==7){
+			Build_TC_REQDATA_ADD("market", "1"); 
+			Build_TC_REQDATA_ADD("secuid", "A261906525");
+		}else{
+			Build_TC_REQDATA_ADD("poststr", ""); 
+			Build_TC_REQDATA_ADD("qryflag", "1");
+			Build_TC_REQDATA_ADD("count", "20");
+		}
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	}
+	
+	
+
+	/**
+	 * fieldName:ER_String, toString:错误行情结果集
+	 * 
+	 * fieldName:stkcode, toString:600031
+	 * fieldName:stkname, toString:三一重工
+	 * fieldName:market, toString:1
+	 * fieldName:price, toString:7.05
+	 * fieldName:num, toString:0
+	 * fieldName:priceunit, toString:10
+	 * fieldName:maxrisevalue, toString:7.76
+	 * fieldName:maxdownvalue, toString:6.35
+	 * fieldName:fundavl, toString:52.10
+	 * */
+	public void showStockPanKouPrice(String sockCode, boolean buy){
+
+		
+		Log.e(TAG, "============ showStockBuy1Price() ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "3500"); 
+		postData.add("tc_sfuncno", "7");
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&bsflag=0B&stkcode=600607&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+
+		Build_TC_REQDATA_ADD("inputtype", sai.inputtype);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("orgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("tradenode", "9504");
+		Build_TC_REQDATA_ADD("ext1", "010"); 
+		Build_TC_REQDATA_ADD("userinfo", "~~~" + sai.custorgid);
+		Build_TC_REQDATA_ADD("authid", "__SESSIONID__"); 
+		Build_TC_REQDATA_ADD("operway", "i"); 
+		Build_TC_REQDATA_ADD("fundid", sai.assetID); 
+		if(buy){
+			Build_TC_REQDATA_ADD("bsflag", "0B");  
+		}else{
+			Build_TC_REQDATA_ADD("bsflag", "0S");  
+		}
+
+		Build_TC_REQDATA_ADD("stkcode", sockCode);
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	}
+	
+	/**
+	 * 500-6
+	 * 
+	 * fieldName:ER_String, toString:-420411065[-990297020]当前时间非交易时间
+	 * 
+	 * @param secuid 
+	 * @param price 
+	 * */
+	public void buy_or_sell(String stock, boolean buy, String price, String num, String secuid){
+		Log.e(TAG, "============ buy_or_sell() ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "500"); 
+		postData.add("tc_sfuncno", "6");
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&trdpwd=111248&chkriskflag=1&price=7.54&qty=100&stkcode=600608&market=1&secuid=A261906525&bsflag=0B&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+
+		Build_TC_REQDATA_ADD("inputtype", sai.inputtype);
+		Build_TC_REQDATA_ADD("inputid", sai.assetID);
+		Build_TC_REQDATA_ADD("orgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("custorgid", sai.custorgid);
+		Build_TC_REQDATA_ADD("tradenode", "9504");
+		Build_TC_REQDATA_ADD("ext1", "010"); 
+		Build_TC_REQDATA_ADD("userinfo", "~~~" + sai.custorgid);
+		Build_TC_REQDATA_ADD("authid", "__SESSIONID__"); 
+		Build_TC_REQDATA_ADD("operway", "i"); 
+		Build_TC_REQDATA_ADD("fundid", sai.assetID); 
+		
+		Build_TC_REQDATA_ADD("trdpwd", sai.pwd); 
+		Build_TC_REQDATA_ADD("chkriskflag", "1"); 
+		Build_TC_REQDATA_ADD("price", price); 
+		Build_TC_REQDATA_ADD("qty", num); 
+		Build_TC_REQDATA_ADD("stkcode", stock); 
+		Build_TC_REQDATA_ADD("market", "1"); 
+		Build_TC_REQDATA_ADD("secuid", secuid); 
+		if(buy){
+			Build_TC_REQDATA_ADD("bsflag", "0B");  
+		}else{
+			Build_TC_REQDATA_ADD("bsflag", "0S");  
+		}
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	}
+	
+	/**
+	 * fieldName:classid, toString:broker_id
+	 * fieldName:classname, toString:金太阳顾问
+	 * fieldName:name, toString:周武
+	 * fieldName:telno, toString:13392555588
+	 * fieldName:addr, toString:
+	 * fieldName:classid, toString:org_id
+	 * fieldName:classname, toString:所属营业部
+	 * fieldName:name, toString:武汉沿江大道营业部
+	 * fieldName:telno, toString:95536
+	 * fieldName:addr, toString:武汉沿江大道159号时代广场1座16、17层
+	 * fieldName:classid, toString:custserv_id
+	 * fieldName:classname, toString:客服热线
+	 * fieldName:name, toString:全国统一
+	 * fieldName:telno, toString:95536
+	 * fieldName:addr, toString:
+	 * fieldName:classid, toString:fundid
+	 * fieldName:classname, toString:资金帐号
+	 * fieldName:name, toString:3100******05
+	 * fieldName:telno, toString:提示：关联资金帐号将获取更多服务，一个资金帐号只能关联一个手机号码。
+	 * fieldName:addr, toString:
+	 * */
+	public void m3750_s1(){
+		//
+		Log.e(TAG, "============ m3750_s1() ============");
+		
+		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
+		PostEntity postData = new PostEntity();
+		postData.add("tc_service", "300");
+		postData.add("tc_isunicode", "1"); 
+		postData.add("TC_ENCRYPT", "36");
+		postData.add("TC_SESSION", "{" + sai.session + "}");
+		postData.add("tc_mfuncno", "3750"); 
+		postData.add("tc_sfuncno", "1");
+		postData.add("tc_packageid", String.valueOf(tc_packageid));
+		
+		/**
+		 * mobile=18071080819&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * */
+		sai.inputtype = "C";
+		sai.custorgid = "3100";
+
+		Build_TC_REQDATA_ADD("mobile", sai.phone);
+		
+		Build_TC_REQDATA_ADD("supportCompress", "18");
+		Build_TC_REQDATA_ADD("sysVer", sai.curver);
+		Build_TC_REQDATA_ADD("hwID", sai.imei);
+		Build_TC_REQDATA_ADD("softName", "Andriod1.6");
+		Build_TC_REQDATA_ADD("netaddr", sai.chk_word==null?"":sai.phone);
+		Build_TC_REQDATA_ADD("conn_style", "2.460.02.0.0");
+		Build_TC_REQDATA_ADD("device_vers", "16|4.1.1");
+		String TC_REQDATA = Build_TC_REQDATA_GET();
+		int TC_REQDATA_LEN = Build_TC_REQDATA_GET_NUM();
+		postData.add("TC_REQLENGTH", "" + TC_REQDATA_LEN);
+		postData.add("TC_REQDATA", TC_REQDATA);
+		
+		tc_packageid++;
+		
+		Log.i(TAG, "postData:" + postData.toString());
+		TCRS tcrs = Post("goldsunhq1.guosen.cn:8002", "/", postData);
+		if(tcrs!=null && !tcrs.IsError()){
+			Log.i(TAG, "tcrs is ok");
+		}
+	}
+	
 	
 	private int Build_TC_REQDATA_GET_NUM() {
 		// TODO Auto-generated method stub
@@ -563,17 +1011,12 @@ public class GuosenClient {
 	}
 
 
-	public void show_stocks(){
-		
-	}
 	
-	public void buy(){
-		
-	}
 
-	public void sell(){
-		
-	}
+
+
+
+
 	
 	public void get_cur_price(){
 		
