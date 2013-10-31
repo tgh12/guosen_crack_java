@@ -1,6 +1,7 @@
 package com.zhangwei.guosen;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,17 @@ import com.zhangwei.guosen.utils.StringUtils;
 import com.zhangwei.yougu.androidconvert.Log;
 import com.zhangwei.yougu.api.API;
 
+/**
+ *   public static final String SH_A_MARKET_COD = "1";
+ *   public static final String SH_B_MARKET_COD = "3";
+ *   public static final String SZ_A_MARKET_COD = "0";
+ *   public static final String SZ_B_MARKET_COD = "2";
+ * */
+
+/**
+ * */
 public class GuosenClient {
+	
 	private static final String TAG = "GuosenClient";
 	
 	private ENODataEncoder m_encoder;
@@ -857,9 +868,13 @@ public class GuosenClient {
 		postData.add("tc_sfuncno", tc_sfuncno + "");
 		postData.add("tc_packageid", String.valueOf(tc_packageid));
 		
+		/**000001.2|399001.1|100100.3|600648.2|002572.1|600708.2|600663.2|600018.2|002052.1|002024.1|603128.2|600119.2|600822.2|600751.2|000088.1|002071.1|601928.2|002596.1|600175.2|600679.2|600278.2|600597.2|600887.2|600519.2|002292.1|002416.1|600860.2|002229.1|600637.2|002153.1|600639.2|600823.2|600895.2|000049.1|000735.1|900912.2|000538.1|600535.2|300298.1|600079.2|002603.1|002038.1|600276.2|300246.1|000858.1
+		 * .编号 == market+1
+		 * */
 		/**
 		 * 500-7
-		 * 仅上证的全部撤单 inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 仅上证的全部撤单2 inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 仅上证的全部撤单    inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * 指定合同的撤单    inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&ordersno=40353&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * 有深证的全部撤单 inputtype=C&inputid=310000110505&custorgid=3100&orgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=0&secuid=0139082908&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * */
@@ -933,6 +948,7 @@ public class GuosenClient {
 	
 
 	/**
+	 * 3500-7
 	 * fieldName:ER_String, toString:错误行情结果集
 	 * 
 	 * fieldName:stkcode, toString:600031

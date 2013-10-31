@@ -194,9 +194,9 @@ public class API {
 		sai.secuidlist= "0139082908,A261906525";
 		sai.persist();
 		
-		String enc_r_in = "cAEAAJ03/p8qI4GFr1bHC7aC/nLzeKhuUwFbJYjYYjkODC/a237u9Xa126GUYHjikUgBHHZo56iIXQ9wOkLxBdU6Vk/QD2pqYt9VmQBZthM4J/dd8I6mv51IV6ieIZUfcGjS9+IhqgjeTp9yL5tgJZ7iTbdZLIMkXJauuMK0oTaaZ+Vn7Amt1ZW7m53mNqdSXCTqXWjVKMf713o8w04n8jgfBjbcT2AKmLwnKJ1r82yzUvqoYU/fjtfQkddq+7yETQ2upLFrSPqllSgBd3R5IqulPLf34vwAhjuWPb+VFPaWkSTbfWqwGzsbsFyT8+m6x3PZwVV/smr5wsQVJ1Dn48bAwHES+mx+V+VlgdhtTp80eHgGoy4gOQTMKPgoyXhKxZmdk9vZqTrP38PWKISLO5SbLYyUYCtVUbUAU5XF1JSkvk4gAj8G7ufJvzeleoFX12eaVuwT2SQe1ZJCUARoAWqnuLvE8IkcaSxvDGneDdUGd0ZAYX9VA/9/LxPP5dDN";
+		String enc_r_in = "QQEAANib93voq87z3MHisRRNGMy+UlHpP2y68BdF5aNhiuwc4V2q90noRW4jzWvzLl7B9iGROY2EGia1L5qSo7HqwQASQVhna0ky/DVHGlong/SMbvm7H9xro6rZEhfYosXUzfgOT2uSEWL6a2L4Jsm4n4UbU6OR+RzNEvQz9NeqqeVNjSwcBewn/1OL+NAyAL1aRCzQhsaSnvK7iRrJvJ6DAd91mt64gFca7PYeDJsDbAcx6pF93XnOsxZr48qiSG1c966qwbzneyLQG6bV3Iqps8JjFFnoB9+6iN8pyLxD4CQd7s5g51JMLhVfHEaieTCOF7uvRWJRuOCHBCFdMTqPR+SWXmrlKfD1Rq7J0C2G1oqLxQnxRV2Ruh9jwyxKC072v52NIvDt3z8AUWYvGxEzq5GpAGnmCRN53HnHv+xosppWxhlsVSliPUbk3OXp";
 		//open or close
-		enc_r_in = null;
+		//enc_r_in = null;
 		
 		//init
 		if(enc_r_in==null){
@@ -222,6 +222,7 @@ public class API {
 			//gc.showStockPanKouPrice("600031", false);
 			//---- 
 			//gc.buy_or_sell("600708", false, "8.04", "100", "1", "A261906525");
+			
 			gc.buy_or_sell("002572", false, "23", "100", "0", "0139082908");
 			
 			//gc.m3750_s1();
