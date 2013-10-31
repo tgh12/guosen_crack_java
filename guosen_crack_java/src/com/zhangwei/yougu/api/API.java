@@ -194,7 +194,7 @@ public class API {
 		sai.secuidlist= "0139082908,A261906525";
 		sai.persist();
 		
-		String enc_r_in = "ogAAAM05f+vibOQXPa80JhVJ613PTURtj6RIOnHhK1YOARyX6mPoOWcYH4OoE6gaSsmzzm/fExhkCUmLVkQqolSX9M3fesHD5juPP1zCFlAULDLuE3I+1YWSmIcr2AUuvG0U+mz/NglNKh9HvVwz0WfvTLg15nrzVFhmqWNyI4Q/V2E9qvQWgeb1SBvRyxHfA0kjdrgnqjlH1g2Yq94YXxmmZjRrnwUDuHLJLIKXDC8=";
+		String enc_r_in = "cAEAAJ03/p8qI4GFr1bHC7aC/nLzeKhuUwFbJYjYYjkODC/a237u9Xa126GUYHjikUgBHHZo56iIXQ9wOkLxBdU6Vk/QD2pqYt9VmQBZthM4J/dd8I6mv51IV6ieIZUfcGjS9+IhqgjeTp9yL5tgJZ7iTbdZLIMkXJauuMK0oTaaZ+Vn7Amt1ZW7m53mNqdSXCTqXWjVKMf713o8w04n8jgfBjbcT2AKmLwnKJ1r82yzUvqoYU/fjtfQkddq+7yETQ2upLFrSPqllSgBd3R5IqulPLf34vwAhjuWPb+VFPaWkSTbfWqwGzsbsFyT8+m6x3PZwVV/smr5wsQVJ1Dn48bAwHES+mx+V+VlgdhtTp80eHgGoy4gOQTMKPgoyXhKxZmdk9vZqTrP38PWKISLO5SbLYyUYCtVUbUAU5XF1JSkvk4gAj8G7ufJvzeleoFX12eaVuwT2SQe1ZJCUARoAWqnuLvE8IkcaSxvDGneDdUGd0ZAYX9VA/9/LxPP5dDN";
 		//open or close
 		enc_r_in = null;
 		
@@ -216,13 +216,20 @@ public class API {
 			//gc.getHanqing();
 			//gc.show_asset();
 			//gc.show_stocks();
-			//gc.weituo(false);
+
 			//gc.showStockPanKouPrice("600031", true);
 			//Log.i(TAG, "DDDDDDDDDDDDDDDDDDDD");
 			//gc.showStockPanKouPrice("600031", false);
-			//---- gc.weituo(7, false);
-			//gc.buy_or_sell("600608", true, "7.54", "100", "A261906525");
-			gc.m3750_s1();
+			//---- 
+			//gc.buy_or_sell("600708", false, "8.04", "100", "1", "A261906525");
+			gc.buy_or_sell("002572", false, "23", "100", "0", "0139082908");
+			
+			//gc.m3750_s1();
+			
+			//gc.weituo(7, false); //撤单
+			//gc.weituo(8, false); //显示所有的委托合同
+			//gc.weituo(8, true); //显示可以撤单的委托合同
+			//gc.weituo(9, false);
 		}else{
 			Log.i(TAG, "m_bfKey:" + sai.m_bfKey);
 			SystemHUB.m_bfKey = sai.m_bfKey;

@@ -670,11 +670,176 @@ public class GuosenClient {
 	}
 	
 	/**
-	 * 500-7
+	 * 500-7 撤单
 	 * fieldName:ER_String, toString:-420413075没有可撤单的委托fundid = 310000110505
 	 * 
-	 * 500-8
-	 * 500-9
+	 * 500-8  列举委托单 cancelflag=1， 显示可以撤单的委托合同
+	 * fieldName:poststr, toString:20131031!66093
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~orderstatus, toString:已报
+	 * fieldName:orderprice, toString:8.000
+	 * fieldName:orderqty, toString:100
+	 * fieldName:matchqty, toString:0
+	 * fieldName:cancelqty, toString:0
+	 * fieldName:ordersno, toString:66093
+	 * fieldName:opertime, toString:9515010
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:~creditflag1, toString:
+	 * fieldName:market, toString:1 
+	 * fieldName:~cancelflag, toString:
+	 * 
+	 * fieldName:poststr, toString:20131031!166485
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~orderstatus, toString:未报
+	 * fieldName:orderprice, toString:8.040
+	 * fieldName:orderqty, toString:100
+	 * fieldName:matchqty, toString:0
+	 * fieldName:cancelqty, toString:0
+	 * fieldName:ordersno, toString:166485
+	 * fieldName:opertime, toString:12131234
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:~creditflag1, toString:
+	 * fieldName:market, toString:1
+	 * fieldName:~cancelflag, toString:
+	 * 
+	 **************************************
+	 *500-8 cancel false 当日委托
+	 *sign=~bsflag&position=poststr&unlist=|market|&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&poststr=&qryflag=1&count=20&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+	 * fieldName:poststr, toString:20131031!40353
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~orderstatus, toString:已撤
+	 * fieldName:orderprice, toString:7.800
+	 * fieldName:orderqty, toString:100
+	 * fieldName:matchqty, toString:0
+	 * fieldName:cancelqty, toString:100
+	 * fieldName:ordersno, toString:40353
+	 * fieldName:opertime, toString:9393621
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:~creditflag1, toString:
+	 * fieldName:market, toString:1
+	 * fieldName:~cancelflag, toString:
+	 * 
+	 * fieldName:poststr, toString:20131031!78911
+	 * fieldName:stkname, toString:索菲亚
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~orderstatus, toString:已撤
+	 * fieldName:orderprice, toString:23.000
+	 * fieldName:orderqty, toString:100
+	 * fieldName:matchqty, toString:0
+	 * fieldName:cancelqty, toString:100
+	 * fieldName:ordersno, toString:78911
+	 * fieldName:opertime, toString:9595496
+	 * fieldName:secuid, toString:0139082908
+	 * fieldName:stkcode, toString:002572
+	 * fieldName:~creditflag1, toString:
+	 * fieldName:market, toString:0
+	 * fieldName:~cancelflag, toString:
+	 *  
+	 * 500-9 当日成交
+	 * sign=~bsflag&position=poststr&unlist=|market|&inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&poststr=&qryflag=1&count=20&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+	 * fieldName:poststr, toString:05370000G6002443
+	 * fieldName:stkname, toString:索菲亚
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:100
+	 * fieldName:matchprice, toString:.000000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:78911
+	 * fieldName:matchtime, toString:10001750
+	 * fieldName:secuid, toString:0139082908
+	 * fieldName:~market, toString:深A
+	 * fieldName:stkcode, toString:002572
+	 * fieldName:market, toString:0
+	 * 
+	 * fieldName:poststr, toString:05370000G6002790
+	 * fieldName:stkname, toString:索菲亚
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:200
+	 * fieldName:matchprice, toString:.000000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:91241
+	 * fieldName:matchtime, toString:10080083
+	 * fieldName:secuid, toString:0139082908
+	 * fieldName:~market, toString:深A
+	 * fieldName:stkcode, toString:002572
+	 * fieldName:market, toString:0
+	 * 
+	 * fieldName:poststr, toString:42095 0150001275
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:100
+	 * fieldName:matchprice, toString:7.800000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:40353
+	 * fieldName:matchtime, toString:9400000
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:market, toString:1
+	 * 
+	 * fieldName:poststr, toString:42095 0150001362
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:100
+	 * fieldName:matchprice, toString:7.800000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:43889
+	 * fieldName:matchtime, toString:9425300
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:market, toString:1
+	 * 
+	 * fieldName:poststr, toString:42095 0150001442
+	 * fieldName:stkname, toString:外高桥
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:200
+	 * fieldName:matchprice, toString:41.000000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:46424
+	 * fieldName:matchtime, toString:9425300
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:stkcode, toString:600648
+	 * fieldName:market, toString:1
+	 * 
+	 * fieldName:poststr, toString:42095 0150001931
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:100
+	 * fieldName:matchprice, toString:8.000000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:66093
+	 * fieldName:matchtime, toString:10001700
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:market, toString:1
+	 * 
+	 * fieldName:poststr, toString:42095 0150002579
+	 * fieldName:stkname, toString:海博股份
+	 * fieldName:~bsflag, toString:证券卖出
+	 * fieldName:~matchtype, toString:撤单成交
+	 * fieldName:matchqty, toString:100
+	 * fieldName:matchprice, toString:8.000000
+	 * fieldName:matchamt, toString:.00
+	 * fieldName:ordersno, toString:90884
+	 * fieldName:matchtime, toString:10080100
+	 * fieldName:secuid, toString:A261906525
+	 * fieldName:~market, toString:沪A
+	 * fieldName:stkcode, toString:600708
+	 * fieldName:market, toString:1
 	 * */
 	public void weituo(int tc_sfuncno, boolean cancelflag){
 
@@ -694,8 +859,11 @@ public class GuosenClient {
 		
 		/**
 		 * 500-7
-		 * inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 仅上证的全部撤单 inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 指定合同的撤单    inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&ordersno=40353&market=1&secuid=A261906525&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * 有深证的全部撤单 inputtype=C&inputid=310000110505&custorgid=3100&orgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&market=0&secuid=0139082908&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * */
+
 		
 		/**
 		 * 500-8/9
@@ -841,11 +1009,16 @@ public class GuosenClient {
 	 * 500-6
 	 * 
 	 * fieldName:ER_String, toString:-420411065[-990297020]当前时间非交易时间
+	 * fieldName:ER_String, toString:-420411065[-150906130]资金可用数不足,0B尚需657.06
+	 * fieldName:ER_String, toString:-420411089证券信息 002572 不存在
+	 * 
+	 * fieldName:orderid, toString:0150004575 （沪A）
+	 * fieldName:orderid, toString:G6005135 (深A)
 	 * 
 	 * @param secuid 
 	 * @param price 
 	 * */
-	public void buy_or_sell(String stock, boolean buy, String price, String num, String secuid){
+	public void buy_or_sell(String stock, boolean buy, String price, String num, String market, String secuid){
 		Log.e(TAG, "============ buy_or_sell() ============");
 		
 		//List<NameValuePair> postData = new ArrayList<NameValuePair>();  
@@ -860,6 +1033,7 @@ public class GuosenClient {
 		
 		/**
 		 * inputtype=C&inputid=310000110505&orgid=3100&custorgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&trdpwd=111248&chkriskflag=1&price=7.54&qty=100&stkcode=600608&market=1&secuid=A261906525&bsflag=0B&supportCompress=18&sysVer=3.6.2.1.1.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
+		 * inputtype=C&inputid=310000110505&custorgid=3100&orgid=3100&tradenode=9504&ext1=010&userinfo=~~~3100&authid=__SESSIONID__&operway=i&fundid=310000110505&trdpwd=111248&chkriskflag=1&price=23&qty=100&stkcode=002572&market=0&secuid=0139082908&bsflag=0S&supportCompress=18&sysVer=3.6.2.1.2.1&hwID=A000004502832C&softName=Andriod1.6&netaddr=18071080819&conn_style=2.460.02.0.0&device_vers=16|4.1.2&
 		 * */
 		sai.inputtype = "C";
 		sai.custorgid = "3100";
@@ -880,7 +1054,7 @@ public class GuosenClient {
 		Build_TC_REQDATA_ADD("price", price); 
 		Build_TC_REQDATA_ADD("qty", num); 
 		Build_TC_REQDATA_ADD("stkcode", stock); 
-		Build_TC_REQDATA_ADD("market", "1"); 
+		Build_TC_REQDATA_ADD("market", market); 
 		Build_TC_REQDATA_ADD("secuid", secuid); 
 		if(buy){
 			Build_TC_REQDATA_ADD("bsflag", "0B");  
@@ -1182,7 +1356,7 @@ public class GuosenClient {
 				int fields_num = tcrs.getFields();
 				int fields_index = 0;
 				while(fields_index<fields_num){
-					Log.i(TAG, "index:" + index + ", fields_index:" + fields_index +", FieldType:" + tcrs.getFieldType(fields_index) + ", fieldName:" + tcrs.getFieldName(fields_index) + ", toString:" + tcrs.toString(fields_index));
+					Log.i(null, /*"index:" + index + ", fields_index:" + fields_index +", FieldType:" + tcrs.getFieldType(fields_index) + */"fieldName:" + tcrs.getFieldName(fields_index) + ", toString:" + tcrs.toString(fields_index));
 					fields_index++;
 				}
 				
